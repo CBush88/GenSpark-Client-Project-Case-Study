@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "tbl_client", uniqueConstraints = {
-        @UniqueConstraint(name = "uc_client_clientemailaddress", columnNames = {"clientEmailAddress"})
+        @UniqueConstraint(name = "uc_client_clientemail", columnNames = {"clientEmail"})
 })
 public class Client {
     @Id
@@ -23,7 +23,7 @@ public class Client {
 
     private String clientName;
 
-    private String clientEmailAddress;
+    private String clientEmail;
 
     @OneToMany()
     @JoinColumn(
@@ -38,10 +38,10 @@ public class Client {
     public Client() {
     }
 
-    public Client(int clientId, String clientName, String clientEmailAddress, List<Project> projects, Blob signedAgreement) {
+    public Client(int clientId, String clientName, String clientEmail, List<Project> projects, Blob signedAgreement) {
         this.clientId = clientId;
         this.clientName = clientName;
-        this.clientEmailAddress = clientEmailAddress;
+        this.clientEmail = clientEmail;
         this.projects = projects;
         this.signedAgreement = signedAgreement;
     }
@@ -62,12 +62,12 @@ public class Client {
         this.clientName = clientName;
     }
 
-    public String getClientEmailAddress() {
-        return clientEmailAddress;
+    public String getClientEmail() {
+        return clientEmail;
     }
 
-    public void setClientEmailAddress(String clientEmailAddress) {
-        this.clientEmailAddress = clientEmailAddress;
+    public void setClientEmail(String clientEmail) {
+        this.clientEmail = clientEmail;
     }
 
     public List<Project> getProjects() {
@@ -91,7 +91,7 @@ public class Client {
         return "Client{" +
                 "clientId=" + clientId +
                 ", clientName='" + clientName + '\'' +
-                ", clientEmailAddress='" + clientEmailAddress + '\'' +
+                ", clientEmail='" + clientEmail + '\'' +
                 ", projects=" + projects +
                 ", signedAgreement=" + signedAgreement +
                 '}';
