@@ -8,32 +8,36 @@ const Clients = (props) => {
     useEffect(() => {
         props.retrieveClients();
     }, []);
+
+    const width = {width:"20%"}
     
   return (
-    <table className='table table-striped table-sm'>
+    <>
+    <h5>Clients</h5>
+    <table className='table table-borderless table-sm text-start'>
         <thead>
-            <th>
-                Client Id
-            </th>
-            <th>
-                Client Name
-            </th>
-            <th>
-                Client Email
-            </th>
-            <th>
-                Projects
-            </th>
-            <th>
-                Signed Agreement
-            </th>
-        </thead>
-        {clientsArr.map(client => (
-            <tr key={client.clientId}>
-                <Client client={client} />
+            <tr>
+                <th style={width}>
+                    Client Id
+                </th>
+                <th style={width}>
+                    Client Name
+                </th>
+                <th style={width}>
+                    Client Email
+                </th>
+                <th style={width}>
+                    Signed Agreement
+                </th>
             </tr>
-        ))}
-    </table>
+        </thead>
+        </table>
+            {clientsArr.map(client => (
+                <span key={client.clientId}>
+                    <Client client={client} />
+                </span>
+            ))}
+    </>
   )
 }
 
