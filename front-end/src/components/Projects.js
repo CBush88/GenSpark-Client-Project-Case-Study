@@ -6,14 +6,18 @@ const Projects = (props) => {
 
     const width = {width:"20%"}
 
-    useEffect(() => {
-      props.retrieveProjects()    
-    }, [])
+    // useEffect(() => {
+    //   props.retrieveProjects()    
+    // }, [])
     
   return (
-    <table className='table table-borderless table-sm'>
+    <>
+    <table className='table table-borderless table-sm text-start'>
         <thead>
             <tr>
+                <th style={width}>
+                    Manage Project
+                </th>
                 <th style={width}>
                     Project Id
                 </th>
@@ -33,6 +37,10 @@ const Projects = (props) => {
             ))}
         </tbody>
     </table>
+    <div className='text-start'>
+    <button className='btn btn-sm btn-outline-success'>Add Project</button>
+    </div>
+    </>
   )
 }
 

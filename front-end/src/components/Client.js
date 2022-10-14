@@ -1,57 +1,46 @@
 import React from 'react'
-import Project from './Project'
+import { deleteClient } from '../services/ClientsData'
+import Projects from './Projects'
 
 
 const Client = (props) => {
     const width = {width:"20%"}
+    const margin = {marginLeft:"2em"}
+
+    const deleteAndRefresh = () => {
+        deleteClient(props.client.clientId)
+        .then(res => alert(res.data))
+        .catch(err => console.log(err.response))
+        const updatedClients = props.clients.filter(client => client.clientId !== props.client.clientId)
+        props.setClients(updatedClients)
+    }
+
   return (
     <>
         <table className='table table-borderless table-sm text-start'>
-            <tr>
-        <td style={width}>
-            {props.client.clientId}
-        </td>
-        <td style={width}>
-            {props.client.clientName}
-        </td>
-        <td style={width}>
-            {props.client.clientEmail}
-        </td>
-        <td style={width}>
-            <button>Update</button>
-            <button>Delete</button>
-        </td>
-        {/* <td style={width}>
-            {props.client.signedAgreement}
-        </td> */}
-        </tr>
+            <tbody>
+                <tr>
+                    <td style={width}>
+                        {props.client.clientId}
+                    </td>
+                    <td style={width}>
+                        {props.client.clientName}
+                    </td>
+                    <td style={width}>
+                        {props.client.clientEmail}
+                    </td>
+                    <td style={width}>
+                        <button className='btn btn-sm btn-outline-primary'>Update</button>
+                        <button className='btn btn-sm btn-outline-danger' style={margin} onClick={deleteAndRefresh}>Delete</button>
+                    </td>
+            <td style={width}>
+                {props.client.signedAgreement}
+            </td>
+                </tr>
+            </tbody>
         </table>
-        <table className='table table-borderless table-sm text-start'>
-            <tr>
-                <th style={width}>
-                </th>
-                <th style={width}>
-                    Project Id
-                </th>
-                <th style={width}>
-                    Project Name
-                </th>
-                <th style={width}>
-                    Description
-                </th>
-            </tr>
-        </table>
-            {props.client.projects.map(project => (
-                <table className='table table-borderless table-sm text-start'>
-                    <tr>
-                        <td style={width}>
-                            <button>Update</button>
-                            <button>Delete</button>
-                        </td>
-                        <Project project={project} />
-                    </tr>
-                </table>
-            ))}
+        <Projects projects={props.client.projects} client={props.client} />
+        <br />
         <button>Signed Agreement</button>
     </>
   )
