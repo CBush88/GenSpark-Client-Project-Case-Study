@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { addClient } from '../services/ClientsData';
 
 const AddClient = (props) => {
-    const margin = {marginLeft:"2em"}
 
     const initialState = {
         "clientName": "",
         "clientEmail": "",
+        "signedAgreement": "",
         "projects":[]
     }
 
@@ -22,8 +22,17 @@ const AddClient = (props) => {
         })
     }
 
+    const handleFile = (e) => {
+        console.log(e)
+        setClient({
+            ...client,
+            [e.target.name]: e.target.value
+        })
+    }
+
     const onSubmit = (e) => {
         e.preventDefault()
+        alert(JSON.stringify(client.signedAgreement))
         addClient(client)
         .then(() => setClient(initialState))
         .then(() => navigate("/"))
@@ -37,7 +46,7 @@ const AddClient = (props) => {
 
   return (
     <div>
-        <form>
+        <form encType='multipart/form-data'>
             <div className='row'>
                 <div className='col col-sm-2'>
                 <label htmlFor='clientName'>Client Name:</label>
@@ -62,13 +71,13 @@ const AddClient = (props) => {
                 <label htmlFor='signedAgreement'>Signed Agreement:</label>
                 </div>
                 <div className='col col-sm-10'>
-                <input className='form-control' type="file" name='signedAgreement' id='signedAgreement' onChange={handleChanges} accept=".pdf" />
+                <input className='form-control' type="file" name='signedAgreement' id='signedAgreement' onChange={handleFile} accept="application/pdf" />
             </div>
             </div>
             <br />
 
             <div className='text-start'>
-            <button className='btn btn-sm btn-outline-success' style={margin} onClick={onSubmit}>Submit</button>
+            <button className='btn btn-sm btn-outline-success' onClick={onSubmit}>Submit</button>
             </div>
         </form>
     </div>
