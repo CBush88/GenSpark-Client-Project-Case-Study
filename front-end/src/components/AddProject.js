@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { updateClient } from '../services/ClientsData'
-import { getProjects } from '../services/ProjectsData'
 
 const AddProject = (props) => {
 

@@ -4,7 +4,6 @@ import Clients from './components/Clients';
 import { getClients } from './services/ClientsData';
 import { getProjects } from './services/ProjectsData';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Projects from './components/Projects';
 import AddClient from './components/AddClient';
 import Header from './components/Header';
 import Footer from './components/Footer';
