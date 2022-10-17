@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { deleteClient } from '../services/ClientsData'
 import Projects from './Projects'
 
@@ -7,9 +7,11 @@ const Client = (props) => {
     const width = {width:"20%"}
     const margin = {marginLeft:"2em"}
 
+    const [client, setClient] = useState(props.client)
+
     const deleteAndRefresh = () => {
         deleteClient(props.client.clientId)
-        .then(res => alert(res.data))
+        .then(res => console.log(res.data))
         .catch(err => console.log(err.response))
         const updatedClients = props.clients.filter(client => client.clientId !== props.client.clientId)
         props.setClients(updatedClients)
@@ -33,15 +35,16 @@ const Client = (props) => {
                         <button className='btn btn-sm btn-outline-primary'>Update</button>
                         <button className='btn btn-sm btn-outline-danger' style={margin} onClick={deleteAndRefresh}>Delete</button>
                     </td>
-            <td style={width}>
-                {props.client.signedAgreement}
-            </td>
                 </tr>
             </tbody>
         </table>
-        <Projects projects={props.client.projects} client={props.client} />
+        <Projects client={client} setClient={setClient} clients={props.clients} setClients={props.setClients} retrieveClients={props.retrieveClients} />
         <br />
         <button>Signed Agreement</button>
+        <br />
+        {props.client.signedAgreement}
+        <br />
+        <iframe src={props.client.signedAgreement} width="80%" height="50%" />
     </>
   )
 }
