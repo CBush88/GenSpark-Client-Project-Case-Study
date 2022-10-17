@@ -1,15 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { getClientById } from '../services/ClientsData'
+import AddProject from './AddProject'
 import Project from './Project'
 
 const Projects = (props) => {
-    const projectsArr = Array.from(props.projects)
 
     const width = {width:"20%"}
 
-    // useEffect(() => {
-    //   props.retrieveProjects()    
-    // }, [])
-    
+    const[projects, setProjects] = useState(props.client.projects)
+
+    const projectsArr = Array.from(projects)
+
+    const [showAddProject, setShowAddProject] = useState(false)
+
+    const onToggle = () => {
+        setShowAddProject(!showAddProject)
+    }    
+
   return (
     <>
     <table className='table table-borderless table-sm text-start'>
@@ -32,13 +39,14 @@ const Projects = (props) => {
         <tbody>
             {projectsArr.map(project => (
                 <tr key={project.projectId}>
-                    <Project project={project} />
+                    <Project project={project} setProjects={setProjects} client={props.client} setClient={props.setClient} clients={props.clients} setClients={props.setClients} />
                 </tr>
             ))}
         </tbody>
     </table>
     <div className='text-start'>
-    <button className='btn btn-sm btn-outline-success'>Add Project</button>
+    <button className='btn btn-sm btn-outline-success' onClick={onToggle} >{(showAddProject)?"Cancel" : "Add Project"}</button>
+    <AddProject showAddProject={showAddProject} setShowAddProject={setShowAddProject} setClient={props.setClient} client={props.client} clients={props.clients} setClients={props.setClients} retrieveClients={props.retrieveClients} />
     </div>
     </>
   )
