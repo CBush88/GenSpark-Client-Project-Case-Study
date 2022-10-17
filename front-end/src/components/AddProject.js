@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
-import { getClientById, updateClient } from '../services/ClientsData'
-import Clients from './Clients'
+import { useNavigate } from 'react-router-dom'
+import { updateClient } from '../services/ClientsData'
+import { getProjects } from '../services/ProjectsData'
 
 const AddProject = (props) => {
 
@@ -31,14 +31,12 @@ const AddProject = (props) => {
             "projects": projects
         })
         updateClient(props.client)
-        .catch((err) => console.log(err.response))
-        const updatedClient = getClientById(props.client.clientId)
-        setProject(initialState)
-        props.setShowAddProject(!props.showAddProject)
-        navigate("/")
+        .then((res) => props.setClients(
+            ...props.clients,
+            res.data
+        ))
+        .then(() => navigate("/"))
     }
-
-    if(props.showAddProject){
         
   return (
     <>
@@ -65,7 +63,6 @@ const AddProject = (props) => {
         </form>
     </>
   )
-    }
 }
 
 export default AddProject

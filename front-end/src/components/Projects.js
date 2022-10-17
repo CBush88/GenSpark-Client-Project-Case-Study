@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getClientById } from '../services/ClientsData'
-import AddProject from './AddProject'
+import { useNavigate } from 'react-router-dom'
 import Project from './Project'
 
 const Projects = (props) => {
@@ -11,11 +10,12 @@ const Projects = (props) => {
 
     const projectsArr = Array.from(projects)
 
-    const [showAddProject, setShowAddProject] = useState(false)
+    const navigate = useNavigate()
 
-    const onToggle = () => {
-        setShowAddProject(!showAddProject)
-    }    
+    const navToAdd = () => {
+        props.setClient(props.client)
+        navigate("/add-project")
+    }
 
   return (
     <>
@@ -45,8 +45,7 @@ const Projects = (props) => {
         </tbody>
     </table>
     <div className='text-start'>
-    <button className='btn btn-sm btn-outline-success' onClick={onToggle} >{(showAddProject)?"Cancel" : "Add Project"}</button>
-    <AddProject showAddProject={showAddProject} setShowAddProject={setShowAddProject} setClient={props.setClient} client={props.client} clients={props.clients} setClients={props.setClients} retrieveClients={props.retrieveClients} />
+    <button className='btn btn-sm btn-outline-success' onClick={navToAdd} >Add Project</button>
     </div>
     </>
   )

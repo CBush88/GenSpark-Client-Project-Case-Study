@@ -8,6 +8,7 @@ const Clients = (props) => {
 
     useEffect(() => {
         props.retrieveClients();
+        props.retrieveProjects();
     }, []);
 
     const width = {width:"20%"}
@@ -35,7 +36,7 @@ const Clients = (props) => {
             </table>
                 {clientsArr.map(client => (
                     <span key={client.clientId}>
-                        <Client client={client} clients={props.clients} setClients={props.setClients} retrieveClients={props.retrieveClients} />
+                        <Client client={client} setClient={props.setClient} clients={props.clients} setClients={props.setClients} retrieveClients={props.retrieveClients} />
                     </span>
                 ))}
         <br />

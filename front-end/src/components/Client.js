@@ -7,8 +7,6 @@ const Client = (props) => {
     const width = {width:"20%"}
     const margin = {marginLeft:"2em"}
 
-    const [client, setClient] = useState(props.client)
-
     const deleteAndRefresh = () => {
         deleteClient(props.client.clientId)
         .then(res => console.log(res.data))
@@ -38,7 +36,7 @@ const Client = (props) => {
                 </tr>
             </tbody>
         </table>
-        <Projects client={client} setClient={setClient} clients={props.clients} setClients={props.setClients} retrieveClients={props.retrieveClients} />
+        <Projects client={props.client} setClient={props.setClient} clients={props.clients} setClients={props.setClients} retrieveClients={props.retrieveClients} />
         <br />
         <button>Signed Agreement</button>
         <br />
