@@ -6,6 +6,8 @@ import { getProjects } from './services/ProjectsData';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Projects from './components/Projects';
 import AddClient from './components/AddClient';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -32,6 +34,7 @@ function App() {
   return (
     <div className="App">
       <div className='container'>
+        <Header />
       <Router>
         <Routes>
           <Route path='/' element={<Clients clients={clients} setClients={setClients} retrieveClients={retrieveClients} />} />
@@ -39,6 +42,7 @@ function App() {
           <Route path='/addclient' element={<AddClient setClients={setClients} projects={projects} retrieveProjects={retrieveProjects} />} />
         </Routes>
       </Router>
+      <Footer />
       </div>
     </div>
   );
