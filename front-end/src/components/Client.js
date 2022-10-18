@@ -44,7 +44,7 @@ const Client = (props) => {
         </table>
         <Projects client={client} setClient={setClient} setHelper={props.setHelper} />
         <br />
-        <button>Signed Agreement</button>
+        <button className={`${props.client.signedAgreement == null?"invisible":"btn btn-outline-primary"}`}>Signed Agreement</button>
         <br />
         <br />
         <AllPages pdf={client.signedAgreement} />
