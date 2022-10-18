@@ -32,7 +32,6 @@ const AddClient = (props) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        alert(JSON.stringify(client.signedAgreement))
         addClient(client)
         .then(() => setClient(initialState))
         .then(() => navigate("/"))

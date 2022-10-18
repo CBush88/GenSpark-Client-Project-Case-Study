@@ -3,6 +3,7 @@ import { deleteClient } from '../services/ClientsData'
 import Projects from './Projects'
 
 
+
 const Client = (props) => {
     const width = {width:"20%"}
     const margin = {marginLeft:"2em"}

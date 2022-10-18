@@ -8,7 +8,7 @@ const Projects = (props) => {
 
     const[projects, setProjects] = useState(props.client.projects)
 
-    const projectsArr = Array.from(projects)
+    const projectsArr = Array.from(props.client.projects)
 
     const navigate = useNavigate()
 
