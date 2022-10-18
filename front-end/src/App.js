@@ -31,7 +31,7 @@ function App() {
     .catch(err => console.log(err.response))
   }
 
-  const [client, setClient] = useState({})
+  const [helper, setHelper] = useState({})
 
   useEffect(() => {
     retrieveClients()
@@ -44,9 +44,9 @@ function App() {
         <Header />
       <Router>
         <Routes>
-          <Route path='/' element={<Clients clients={clients} setClients={setClients} setClient={setClient} retrieveClients={retrieveClients} retrieveProjects={retrieveProjects} />} />
-          <Route path='/add-project' element={<AddProject client={client} setClient={setClient} projects={projects} setProjects={setProjects} retrieveClients={retrieveClients} retrieveProjects={retrieveProjects} setClients={setClients} clients={clients} />} />
-          <Route path='/addclient' element={<AddClient setClients={setClients} projects={projects} retrieveProjects={retrieveProjects} />} />
+          <Route path='/' element={<Clients clients={clients} setClients={setClients} setHelper={setHelper} retrieveClients={retrieveClients} retrieveProjects={retrieveProjects} />} />
+          <Route path='/add-project' element={<AddProject client={helper} setClient={setHelper} setClients={setClients} clients={clients} />} />
+          <Route path='/addclient' element={<AddClient />} />
         </Routes>
       </Router>
       <Footer />

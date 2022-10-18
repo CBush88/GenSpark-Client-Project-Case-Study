@@ -1,20 +1,33 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { deleteProject } from '../services/ProjectsData'
 import Project from './Project'
 
 const Projects = (props) => {
 
     const width = {width:"20%"}
 
-    const[projects, setProjects] = useState(props.client.projects)
-
     const projectsArr = Array.from(props.client.projects)
 
     const navigate = useNavigate()
 
     const navToAdd = () => {
-        props.setClient(props.client)
+        props.setHelper(props.client)
         navigate("/add-project")
+    }
+
+    const[projects, setProjects] = useState(props.client.projects)
+
+    const deleteP = (projectId) => {
+        deleteProject(projectId)
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err.response))
+        const updatedProjects = projects.filter(project => project.projectId !== projectId)
+        setProjects(updatedProjects)
+        props.setClient({
+            ...props.client,
+            "projects": updatedProjects
+        })
     }
 
   return (
@@ -39,7 +52,7 @@ const Projects = (props) => {
         <tbody>
             {projectsArr.map(project => (
                 <tr key={project.projectId}>
-                    <Project project={project} setProjects={setProjects} client={props.client} setClient={props.setClient} clients={props.clients} setClients={props.setClients} />
+                    <Project project={project} deleteP={deleteP} />
                 </tr>
             ))}
         </tbody>

@@ -36,7 +36,7 @@ const Clients = (props) => {
             </table>
                 {clientsArr.map(client => (
                     <span key={client.clientId}>
-                        <Client client={client} setClient={props.setClient} clients={props.clients} setClients={props.setClients} retrieveClients={props.retrieveClients} />
+                        <Client client={client} setHelper={props.setHelper} clients={props.clients} setClients={props.setClients} />
                     </span>
                 ))}
         <br />

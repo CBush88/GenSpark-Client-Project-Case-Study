@@ -36,12 +36,7 @@ const AddClient = (props) => {
         .then(() => setClient(initialState))
         .then(() => navigate("/"))
         .catch((err) => console.log(err.response))
-    }
-
-    useEffect(() => {
-      props.retrieveProjects()
-    }, [])
-    
+    }    
 
   return (
     <div>

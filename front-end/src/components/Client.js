@@ -8,7 +8,11 @@ const Client = (props) => {
     const width = {width:"20%"}
     const margin = {marginLeft:"2em"}
 
-    const deleteAndRefresh = () => {
+    
+
+    const[client, setClient] = useState(props.client)
+
+    const onClickDeleteClient = () => {
         deleteClient(props.client.clientId)
         .then(res => console.log(res.data))
         .catch(err => console.log(err.response))
@@ -32,12 +36,12 @@ const Client = (props) => {
                     </td>
                     <td style={width}>
                         <button className='btn btn-sm btn-outline-primary'>Update</button>
-                        <button className='btn btn-sm btn-outline-danger' style={margin} onClick={deleteAndRefresh}>Delete</button>
+                        <button className='btn btn-sm btn-outline-danger' style={margin} onClick={onClickDeleteClient}>Delete</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <Projects client={props.client} setClient={props.setClient} clients={props.clients} setClients={props.setClients} retrieveClients={props.retrieveClients} />
+        <Projects client={client} setClient={setClient} setHelper={props.setHelper} />
         <br />
         <button>Signed Agreement</button>
         <br />
