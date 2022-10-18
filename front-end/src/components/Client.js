@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { deleteClient } from '../services/ClientsData'
+import AllPages from './AllPages'
 import Projects from './Projects'
 
 
@@ -45,9 +46,8 @@ const Client = (props) => {
         <br />
         <button>Signed Agreement</button>
         <br />
-        {props.client.signedAgreement}
         <br />
-        <iframe src={props.client.signedAgreement} width="80%" height="50%" />
+        <AllPages pdf={client.signedAgreement} />
     </>
   )
 }
