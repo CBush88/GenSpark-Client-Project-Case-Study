@@ -22,11 +22,23 @@ const AddClient = (props) => {
         })
     }
 
-    const handleFile = (e) => {
-        console.log(e)
+    const handleFile = async (e) => {
+        // console.log(e)
+        let reader = new FileReader()
+        let fileByteArray = []
+        reader.readAsArrayBuffer(e.target.files[0])
+        reader.onloadend = (e) => {
+            if(e.target.readyState == FileReader.DONE){
+                let arrayBuffer = e.target.result,
+                array = new Uint8Array(arrayBuffer)
+                for(let i = 0; i < array.length; i++){
+                    fileByteArray.push(array[i])
+                }
+            }
+        }
         setClient({
             ...client,
-            [e.target.name]: e.target.value
+            [e.target.name]: fileByteArray
         })
     }
 
