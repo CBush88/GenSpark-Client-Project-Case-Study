@@ -25,7 +25,7 @@ public class Client {
 
     private String clientEmail;
 
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "client_id",
             referencedColumnName = "clientId"
