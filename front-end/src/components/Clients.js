@@ -8,7 +8,6 @@ const Clients = (props) => {
 
     useEffect(() => {
         props.retrieveClients();
-        props.retrieveProjects();
     }, []);
 
     const width = {width:"20%"}
@@ -40,7 +39,7 @@ const Clients = (props) => {
                     </span>
                 ))}
         <br />
-        <div className='text-start'>
+        <div className='text-end' style={{marginRight:"5em"}}>
             <Link to="/addclient"><button className='btn btn-small btn-outline-success'>Add Client</button></Link>
         </div>
     </>

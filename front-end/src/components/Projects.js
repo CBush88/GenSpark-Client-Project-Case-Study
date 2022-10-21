@@ -6,14 +6,12 @@ import Project from './Project'
 const Projects = (props) => {
 
     const width = {width:"20%"}
-
-    const projectsArr = Array.from(props.client.projects)
-
+    
     const navigate = useNavigate()
 
     const navToAdd = () => {
         props.setHelper(props.client)
-        navigate("/add-project")
+        navigate("/addproject")
     }
 
     const[projects, setProjects] = useState(props.client.projects)
@@ -50,9 +48,9 @@ const Projects = (props) => {
             </tr>
         </thead>
         <tbody>
-            {projectsArr.map(project => (
+            {props.client.projects.map(project => (
                 <tr key={project.projectId}>
-                    <Project project={project} deleteP={deleteP} />
+                    <Project project={project} client={props.client} deleteP={deleteP} setHelper={props.setHelper} />
                 </tr>
             ))}
         </tbody>
