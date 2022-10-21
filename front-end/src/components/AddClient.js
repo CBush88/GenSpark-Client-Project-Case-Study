@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { addClient } from '../services/ClientsData';
 
@@ -23,23 +23,17 @@ const AddClient = (props) => {
     }
 
     const handleFile = async (e) => {
-        // console.log(e)
         let reader = new FileReader()
-        let fileByteArray = []
-        reader.readAsArrayBuffer(e.target.files[0])
-        reader.onloadend = (e) => {
-            if(e.target.readyState == FileReader.DONE){
-                let arrayBuffer = e.target.result,
-                array = new Uint8Array(arrayBuffer)
-                for(let i = 0; i < array.length; i++){
-                    fileByteArray.push(array[i])
-                }
-            }
+        let base64
+        reader.onload = (ev) =>{
+            base64 = ev.target.result
+            setClient({
+                ...client,
+                [e.target.name]: base64
+            })
+            console.log(base64)
         }
-        setClient({
-            ...client,
-            [e.target.name]: fileByteArray
-        })
+        reader.readAsDataURL(e.target.files[0])
     }
 
     const onSubmit = (e) => {
