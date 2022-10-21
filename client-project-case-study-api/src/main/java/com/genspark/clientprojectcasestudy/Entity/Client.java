@@ -33,13 +33,13 @@ public class Client {
     private List<Project> projects;
 
     @Lob
-    @Column(name = "signed_agreement", nullable = false)
-    private byte[] signedAgreement;
+//    @Column(name = "signed_agreement", nullable = false)
+    private String signedAgreement;
 
     public Client() {
     }
 
-    public Client(int clientId, String clientName, String clientEmail, List<Project> projects, byte[] signedAgreement) {
+    public Client(int clientId, String clientName, String clientEmail, List<Project> projects, String signedAgreement) {
         this.clientId = clientId;
         this.clientName = clientName;
         this.clientEmail = clientEmail;
@@ -79,11 +79,11 @@ public class Client {
         this.projects = projects;
     }
 
-    public byte[] getSignedAgreement() {
+    public String getSignedAgreement() {
         return signedAgreement;
     }
 
-    public void setSignedAgreement(byte[] signedAgreement) {
+    public void setSignedAgreement(String signedAgreement) {
         this.signedAgreement = signedAgreement;
     }
 
@@ -94,7 +94,7 @@ public class Client {
                 ", clientName='" + clientName + '\'' +
                 ", clientEmail='" + clientEmail + '\'' +
                 ", projects=" + projects +
-                ", signedAgreement=" + Arrays.toString(signedAgreement) +
+                ", signedAgreement=" + signedAgreement +
                 '}';
     }
 }
