@@ -1,14 +1,25 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { updateProject } from '../services/ProjectsData'
+import PropTypes from 'prop-types'
 
 const UpdateProject = (props) => {
+
+    const {helper, setHelper, clients, setClients} = props
+
+    UpdateProject.propTypes = {
+        helper: PropTypes.object,
+        clients: PropTypes.array,
+        setClients: PropTypes.func,
+    }
     
 
     const width={width:"20%"}
-    const [updatedClient, setUpdatedClient] = useState(props.helper.client)
-    const [updatedProject, setUpdatedProject] = useState(props.helper.project)
-    const [projects, setProjects] = useState(props.helper.client.projects)
+
+    const [updatedClient, setUpdatedClient] = useState(helper.client)  //Why doesn't this do anything?!?!?!
+
+    const [updatedProject, setUpdatedProject] = useState(helper.project)
+
     const navigate = useNavigate()
 
     const handleChanges = (e) => {
@@ -21,21 +32,38 @@ const UpdateProject = (props) => {
     const onSubmit = () => {
         updateProject(updatedProject)
         .then((res) => console.log(res.data))
-        .then(setProjects({
-            ...projects,
-            updatedProject
-        }))
-        .then(setUpdatedClient({
-            ...updatedClient,
-            "projects": updatedProject
-        }))
-        .then(props.setClients({
-            ...props.clients,
-            updatedClient
-        }))
-        .then(props.setHelper(null))
-        .then(navigate("/"))
         .catch((err) => console.log(err.response))
+        const updatedProjects = helper.client.projects.map((project) => {
+            if(project.projectId === helper.project.projectId){
+                return updatedProject
+            }else{
+                return project
+            }
+        })
+        helper.setProjects(updatedProjects)
+
+        setUpdatedClient({...updatedClient, "projects": updatedProjects})
+
+        const theUpdated = {
+            "clientId": updatedClient.clientId,
+            "clientName": updatedClient.clientName,
+            "clientEmail": updatedClient.clientEmail,
+            "projects": updatedProjects,
+            "signedAgreement": updatedClient.signedAgreement
+        }
+        
+        const updatedClients = clients.map(client => {
+            if(client.clientId === updatedClient.clientId){
+                return theUpdated
+            }else{
+                return client
+            }
+        })
+
+        setClients(updatedClients)
+        helper.setProject(helper)
+        props.setHelper({"client": theUpdated})
+        navigate(-1)
     }
 
   return (
@@ -44,7 +72,7 @@ const UpdateProject = (props) => {
         <thead>
             <tr>
                 <th style={width}>
-                    <label htmlFor='save' >Manage Project</label>
+                    <label htmlFor='save'>Manage Project</label>
                 </th>
                 <th style={width}>
                     <label htmlFor='projectId'>Project Id</label>

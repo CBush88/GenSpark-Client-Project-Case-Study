@@ -3,16 +3,28 @@ import { useNavigate } from 'react-router-dom'
 import { deleteClient } from '../services/ClientsData'
 import AllPages from './AllPages'
 import Projects from './Projects'
+import PropTypes from 'prop-types'
 
 
 
 const Client = (props) => {
+
+    const {setHelper, clients, setClients} = props
+
+    Client.propTypes = {
+        setHelper: PropTypes.func,
+        clients: PropTypes.array,
+        setClients: PropTypes.func,
+    }
+
+
     const width = {width:"20%"}
     const margin = {marginLeft:"2em"}
 
-    const[client, setClient] = useState(props.client)
+    const [showPDF, setShowPDF] = useState(false)
+    const [client, setClient] = useState(props.client)
 
-    const[showPDF, setShowPDF] = useState(false)
+    const {clientId, clientName, clientEmail, projects, signedAgreement} = client
 
     const navigate = useNavigate()
 
@@ -21,15 +33,15 @@ const Client = (props) => {
     )
 
     const onClickDeleteClient = () => {
-        deleteClient(props.client.clientId)
+        deleteClient(clientId)
         .then(res => console.log(res.data))
         .catch(err => console.log(err.response))
-        const updatedClients = props.clients.filter(client => client.clientId !== props.client.clientId)
-        props.setClients(updatedClients)
+        const updatedClients = clients.filter(client => client.clientId !== props.client.clientId)
+        setClients(updatedClients)
     }
 
     const onClickUpdateClient = () => {
-        props.setHelper(client)
+        props.setHelper({"client": client, "setClient": setClient})
         navigate("/updateClient")
     }
   return (
@@ -38,13 +50,13 @@ const Client = (props) => {
             <tbody>
                 <tr>
                     <td style={width}>
-                        {props.client.clientId}
+                        {clientId}
                     </td>
                     <td style={width}>
-                        {props.client.clientName}
+                        {clientName}
                     </td>
                     <td style={width}>
-                        {props.client.clientEmail}
+                        {clientEmail}
                     </td>
                     <td style={width}>
                         <button className='btn btn-sm btn-outline-primary' onClick={onClickUpdateClient}>Update</button>
@@ -53,12 +65,12 @@ const Client = (props) => {
                 </tr>
             </tbody>
         </table>
-        <Projects client={client} setClient={setClient} setHelper={props.setHelper} />
+        <Projects client={client} setClient={setClient} clients={clients} setClients={setClients} setHelper={setHelper} />
         <br />
-        <button className={`${props.client.signedAgreement == null?"invisible":"btn btn-outline-primary"}`} onClick={pdfToggle}>{(showPDF)?"Close":"Signed Agreement"}</button>
+        <button className={`${signedAgreement == null?"invisible":"btn btn-outline-primary"}`} onClick={pdfToggle}>{(showPDF)?"Close":"Signed Agreement"}</button>
         <br />
         <br />
-        {(showPDF)?<AllPages pdf={client.signedAgreement} />: ""}
+        {(showPDF)?<AllPages pdf={signedAgreement} />: ""}
     </>
   )
 }

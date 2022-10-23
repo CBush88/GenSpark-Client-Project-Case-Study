@@ -7,7 +7,7 @@ const AddClient = (props) => {
     const initialState = {
         "clientName": "",
         "clientEmail": "",
-        "signedAgreement": "",
+        "signedAgreement": null,
         "projects":[]
     }
 
@@ -75,7 +75,6 @@ const AddClient = (props) => {
             </div>
             </div>
             <br />
-
             <div className='text-start'>
             <button className='btn btn-sm btn-outline-success' onClick={onSubmit}>Submit</button>
             </div>

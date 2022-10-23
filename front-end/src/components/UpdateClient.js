@@ -1,12 +1,22 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { updateClient } from '../services/ClientsData'
+import PropTypes from 'prop-types'
+import Clients from './Clients'
 
 const UpdateClient = (props) => {
 
+    const {helper, setHelper, clients, setClients} = props
+
+    UpdateClient.propTypes = {
+        helper: PropTypes.object,
+        setHelper: PropTypes.func,
+    }
+
+
     const width = {width:"20%"}
 
-    const [updatedClient, setUpdatedClient] = useState(props.helper)
+    const [updatedClient, setUpdatedClient] = useState(helper.client)
 
     const handleChanges = (e) =>{
         setUpdatedClient({
@@ -20,13 +30,18 @@ const UpdateClient = (props) => {
     const onSubmit = () =>{
         updateClient(updatedClient)
         .then((res) => console.log(res.data))
-        .then(() => props.setClients({
-            ...props.clients,
-            updatedClient
-        }))
-        .then(() => props.setHelper(null))
-        .then(() => navigate("/"))
         .catch((err) => console.log(err.response))
+        helper.setClient(updatedClient)
+        setHelper({"client": updatedClient})
+        const updatedClients = clients.map((client) => {
+            if(client.clientId === updatedClient.clientId){
+                return updatedClient
+            }else{
+                return client
+            }
+        })
+        setClients(updatedClients)
+        navigate("/")
     }
 
   return (
@@ -50,7 +65,7 @@ const UpdateClient = (props) => {
                 <tbody>
                 <tr>
                     <td style={width}>
-                        {props.helper.clientId}
+                        {updatedClient.clientId}
                     </td>
                     <td style={width}>
                         <input className='form-control form-control-sm' type='text' value={updatedClient.clientName} name='clientName' id='clientName' onChange={handleChanges} />

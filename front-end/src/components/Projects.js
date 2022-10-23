@@ -1,31 +1,29 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { deleteProject } from '../services/ProjectsData'
 import Project from './Project'
+import PropTypes from  'prop-types'
 
 const Projects = (props) => {
+
+    const {client, setClient, clients, setClients, setHelper} = props
+
+    Projects.propTypes = {
+        client: PropTypes.object,
+        setClient: PropTypes.func,
+        clients: PropTypes.array,
+        setClients: PropTypes.func,
+        setHelper: PropTypes.func,
+    }
 
     const width = {width:"20%"}
     
     const navigate = useNavigate()
 
+    const [projects, setProjects] = useState(client.projects)
+
     const navToAdd = () => {
-        props.setHelper(props.client)
+        setHelper({"client": props.client, "setClient": setClient})
         navigate("/addproject")
-    }
-
-    const[projects, setProjects] = useState(props.client.projects)
-
-    const deleteP = (projectId) => {
-        deleteProject(projectId)
-        .then(res => console.log(res.data))
-        .catch(err => console.log(err.response))
-        const updatedProjects = projects.filter(project => project.projectId !== projectId)
-        setProjects(updatedProjects)
-        props.setClient({
-            ...props.client,
-            "projects": updatedProjects
-        })
     }
 
   return (
@@ -48,9 +46,9 @@ const Projects = (props) => {
             </tr>
         </thead>
         <tbody>
-            {props.client.projects.map(project => (
+            {projects.map(project => (
                 <tr key={project.projectId}>
-                    <Project project={project} client={props.client} deleteP={deleteP} setHelper={props.setHelper} />
+                    <Project project={project} projects={projects} setProjects={setProjects} client={client} setClient={setClient} setHelper={setHelper} clients={clients} setClients={setClients} />
                 </tr>
             ))}
         </tbody>
