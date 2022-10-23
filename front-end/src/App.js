@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './App.css';
 import Clients from './components/Clients';
 import { getClients } from './services/ClientsData';
@@ -10,6 +10,10 @@ import AddProject from './components/AddProject';
 import UpdateClient from './components/UpdateClient';
 import UpdateProject from './components/UpdateProject';
 import SingleClient from './components/SingleClient';
+import { getUsers } from './services/UsersData';
+import Login from './components/Authentication/Login';
+import SignUp from './components/Authentication/SignUp';
+import bcrypt from 'bcryptjs'
 
 function App() {
 
@@ -25,11 +29,45 @@ function App() {
 
   const [helper, setHelper] = useState()
 
-  useEffect(() => {
-    retrieveClients()
-  }, [])
-  
+  const [users, setUsers] = useState([])
+  const [token, setToken] = useState(null)
+  const [userAttempt, setUserAttempt] = useState()
 
+  const retrieveUsers = () => {
+    getUsers()
+    .then(res => {
+      setUsers(res.data)
+    })
+    .catch(err => console.log(err.response))
+  }
+
+  const authenticate = (e) =>{
+    e.preventDefault()
+    users.forEach(user =>{
+      if(user.username === userAttempt.username){
+        if(bcrypt.compareSync(userAttempt.password, user.password)){
+          setToken({username: userAttempt.userName, role: user.role})
+        }
+      }
+    })
+  }
+
+  if(token === null){
+    return(
+      <div className="App">
+        <div className='container'>
+          <Header />
+        <Router>
+          <Routes>
+            <Route path='/' element={<Login userAttempt={userAttempt} setUserAttempt={setUserAttempt} retrieveUsers={retrieveUsers} authenticate={authenticate} />} />
+            <Route path='/signup' element={<SignUp />} />
+          </Routes>
+        </Router>
+        <Footer />
+        </div>
+      </div>
+    )
+  }else {
   return (
     <div className="App">
       <div className='container'>
@@ -48,6 +86,7 @@ function App() {
       </div>
     </div>
   );
+  }
 }
 
 export default App;
