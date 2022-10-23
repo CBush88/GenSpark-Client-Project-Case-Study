@@ -1,8 +1,18 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { updateClient } from '../services/ClientsData'
+import PropTypes from 'prop-types'
 
 const AddProject = (props) => {
+
+    const {helper, setHelper, setClients, clients} = props
+
+    AddProject.propTypes = {
+        helper: PropTypes.object,
+        setHelper: PropTypes.func,
+        setClients: PropTypes.func,
+        clients: PropTypes.array
+    }
 
     const navigate = useNavigate()
 
@@ -11,7 +21,7 @@ const AddProject = (props) => {
         "projectDescription": "",
     }
 
-    const projects = props.client.projects
+    const projects = helper.client.projects
 
     const [project, setProject] = useState(initialState)
 
@@ -25,16 +35,27 @@ const AddProject = (props) => {
     const onSubmit = (e) => {
         e.preventDefault()
         projects.push(project)
-        props.setClient({
-            ...props.client,
-            "projects": projects
+        // setHelper({
+        //     ...helper.client,
+        //     "projects": projects
+        // })
+        updateClient(helper.client)
+        .then((res) => {
+            console.log(res.data)
+            helper.setClient(
+                res.data
+            )
+            const updatedClients = clients.map(client => {
+                if(client.clientId === helper.client.clientId){
+                    return res.data
+                }else{
+                    return client
+                }
+            })
+            setClients(updatedClients)
         })
-        updateClient(props.client)
-        .then((res) => props.setClients(
-            ...props.clients,
-            res.data
-        ))
-        .then(() => navigate("/"))
+        .then(() => navigate(-1))
+        .catch(err => console.log(err.response))
     }
         
   return (

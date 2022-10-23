@@ -1,7 +1,7 @@
 package com.genspark.clientprojectcasestudy.Entity;
 
 import javax.persistence.*;
-import java.sql.Blob;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -25,20 +25,21 @@ public class Client {
 
     private String clientEmail;
 
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "client_id",
             referencedColumnName = "clientId"
     )
     private List<Project> projects;
 
-    @Column(name = "signed_agreement", nullable = false)
-    private Blob signedAgreement;
+    @Lob
+//    @Column(name = "signed_agreement", nullable = false)
+    private String signedAgreement;
 
     public Client() {
     }
 
-    public Client(int clientId, String clientName, String clientEmail, List<Project> projects, Blob signedAgreement) {
+    public Client(int clientId, String clientName, String clientEmail, List<Project> projects, String signedAgreement) {
         this.clientId = clientId;
         this.clientName = clientName;
         this.clientEmail = clientEmail;
@@ -78,11 +79,11 @@ public class Client {
         this.projects = projects;
     }
 
-    public Blob getSignedAgreement() {
+    public String getSignedAgreement() {
         return signedAgreement;
     }
 
-    public void setSignedAgreement(Blob signedAgreement) {
+    public void setSignedAgreement(String signedAgreement) {
         this.signedAgreement = signedAgreement;
     }
 

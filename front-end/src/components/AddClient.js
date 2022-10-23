@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { addClient } from '../services/ClientsData';
 
@@ -7,7 +7,7 @@ const AddClient = (props) => {
     const initialState = {
         "clientName": "",
         "clientEmail": "",
-        "signedAgreement": "",
+        "signedAgreement": null,
         "projects":[]
     }
 
@@ -22,12 +22,18 @@ const AddClient = (props) => {
         })
     }
 
-    const handleFile = (e) => {
-        console.log(e)
-        setClient({
-            ...client,
-            [e.target.name]: e.target.value
-        })
+    const handleFile = async (e) => {
+        let reader = new FileReader()
+        let base64
+        reader.onload = (ev) =>{
+            base64 = ev.target.result
+            setClient({
+                ...client,
+                [e.target.name]: base64
+            })
+            console.log(base64)
+        }
+        reader.readAsDataURL(e.target.files[0])
     }
 
     const onSubmit = (e) => {
@@ -69,7 +75,6 @@ const AddClient = (props) => {
             </div>
             </div>
             <br />
-
             <div className='text-start'>
             <button className='btn btn-sm btn-outline-success' onClick={onSubmit}>Submit</button>
             </div>

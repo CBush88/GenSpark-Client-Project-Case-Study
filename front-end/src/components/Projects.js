@@ -1,33 +1,29 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { deleteProject } from '../services/ProjectsData'
 import Project from './Project'
+import PropTypes from  'prop-types'
 
 const Projects = (props) => {
 
-    const width = {width:"20%"}
+    const {client, setClient, clients, setClients, setHelper} = props
 
-    const projectsArr = Array.from(props.client.projects)
-
-    const navigate = useNavigate()
-
-    const navToAdd = () => {
-        props.setHelper(props.client)
-        navigate("/add-project")
+    Projects.propTypes = {
+        client: PropTypes.object,
+        setClient: PropTypes.func,
+        clients: PropTypes.array,
+        setClients: PropTypes.func,
+        setHelper: PropTypes.func,
     }
 
-    const[projects, setProjects] = useState(props.client.projects)
+    const width = {width:"20%"}
+    
+    const navigate = useNavigate()
 
-    const deleteP = (projectId) => {
-        deleteProject(projectId)
-        .then(res => console.log(res.data))
-        .catch(err => console.log(err.response))
-        const updatedProjects = projects.filter(project => project.projectId !== projectId)
-        setProjects(updatedProjects)
-        props.setClient({
-            ...props.client,
-            "projects": updatedProjects
-        })
+    const [projects, setProjects] = useState(client.projects)
+
+    const navToAdd = () => {
+        setHelper({"client": props.client, "setClient": setClient})
+        navigate("/addproject")
     }
 
   return (
@@ -50,9 +46,9 @@ const Projects = (props) => {
             </tr>
         </thead>
         <tbody>
-            {projectsArr.map(project => (
+            {projects.map(project => (
                 <tr key={project.projectId}>
-                    <Project project={project} deleteP={deleteP} />
+                    <Project project={project} projects={projects} setProjects={setProjects} client={client} setClient={setClient} setHelper={setHelper} clients={clients} setClients={setClients} />
                 </tr>
             ))}
         </tbody>

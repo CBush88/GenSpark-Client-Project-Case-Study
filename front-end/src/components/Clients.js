@@ -1,15 +1,23 @@
 import React, { useEffect } from 'react'
+import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import Client from './Client';
 
 const Clients = (props) => {
 
-    const clientsArr = Array.from(props.clients)
+    const {clients, setClients, setHelper, retrieveClients} = props
+
+    Clients.propTypes = {
+        props: PropTypes.object,
+        clients: PropTypes.array,
+        setClients: PropTypes.func,
+        setHelper: PropTypes.func,
+        retrieveClients: PropTypes.func,
+    }
 
     useEffect(() => {
-        props.retrieveClients();
-        props.retrieveProjects();
-    }, []);
+        retrieveClients();
+    },[]);
 
     const width = {width:"20%"}
     
@@ -34,13 +42,13 @@ const Clients = (props) => {
                 </tr>
             </thead>
             </table>
-                {clientsArr.map(client => (
+                {clients.map(client => (
                     <span key={client.clientId}>
-                        <Client client={client} setHelper={props.setHelper} clients={props.clients} setClients={props.setClients} />
+                        <Client client={client} setHelper={setHelper} clients={clients} setClients={setClients} />
                     </span>
                 ))}
         <br />
-        <div className='text-start'>
+        <div className='text-end' style={{marginRight:"5em"}}>
             <Link to="/addclient"><button className='btn btn-small btn-outline-success'>Add Client</button></Link>
         </div>
     </>
