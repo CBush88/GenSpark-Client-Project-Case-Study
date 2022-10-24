@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { getClientById } from '../services/ClientsData'
 import Client from './Client'
+import PropTypes from 'prop-types'
 
-const SingleClient = ({retrieveClients, setHelper, clients, setClients}) => {    
+const SingleClient = ({retrieveClients, helper, setHelper, clients, setClients}) => {  
+    
+    SingleClient.propTypes = {
+        retrieveClients: PropTypes.func,
+        setHelper: PropTypes.func,
+        clients: PropTypes.array,
+        setClients: PropTypes.func,
+    }
     
     useEffect(() => {
-            retrieveClients()
-        },[])
+        retrieveClients()
+    },[])
 
-    const [client, setClient] = useState({"clientId": null})
+    const initialClient = (helper!== null && helper.client !== null)? helper.client : {"clientId": null}
+
+    const [client, setClient] = useState(initialClient)
     const [clientId, setClientId] = useState("-1")
 
     const clientsArr = Array.from(clients)
@@ -21,6 +31,7 @@ const SingleClient = ({retrieveClients, setHelper, clients, setClients}) => {
         getClientById(clientId)
         .then((res) => {
             setClient(res.data)
+            setHelper({client: res.data})
         })
         .catch((err) => console.log(err.response))
     }
