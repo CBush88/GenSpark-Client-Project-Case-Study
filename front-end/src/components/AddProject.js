@@ -37,16 +37,10 @@ const AddProject = (props) => {
         e.preventDefault()
         if(projectValidation(project)){
             projects.push(project)
-            // setHelper({
-            //     ...helper.client,
-            //     "projects": projects
-            // })
             updateClient(helper.client)
             .then((res) => {
                 console.log(res.data)
-                helper.setClient(
-                    res.data
-                )
+                setHelper({"client": res.data})
                 const updatedClients = clients.map(client => {
                     if(client.clientId === helper.client.clientId){
                         return res.data
