@@ -28,7 +28,8 @@ const UpdateClient = (props) => {
 
     const navigate = useNavigate()
 
-    const onSubmit = () =>{
+    const onSubmit = (e) =>{
+        e.preventDefault()
         if(clientValidation(updatedClient)){
             updateClient(updatedClient)
             .then((res) => console.log(res.data))
@@ -49,40 +50,34 @@ const UpdateClient = (props) => {
 
   return (
     <>
-        <table className='table table-sm table-borderless text-start'>
-            <thead>
-                <tr>
-                <th style={width}>
-                        Client Id
-                    </th>
-                    <th style={width}>
-                        Client Name
-                    </th>
-                    <th style={width}>
-                        Client Email
-                    </th>
-                    <th style={width}>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td style={width}>
-                        {updatedClient.clientId}
-                    </td>
-                    <td style={width}>
-                        <input className='form-control form-control-sm' type='text' value={updatedClient.clientName} name='clientName' id='clientName' required onChange={handleChanges} />
-                    </td>
-                    <td style={width}>
-                        <input className='form-control form-control-sm' type='text' value={updatedClient.clientEmail} name='clientEmail' id='clientEmail' pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" required onChange={handleChanges} />
-                    </td>
-                    <td style={width}>
-                        <button className='btn btn-sm btn-outline-success' onClick={onSubmit}>Save</button>
-                    </td>
-                </tr>
-                </tbody>
-        </table>
-        
+        <form onSubmit={onSubmit}>
+            <div className='row'>
+                <div className='col-2 text-start'>
+                    <label htmlFor='clientId'>Client ID</label>
+                </div>
+                <div className='col-5 text-start'>
+                    <label htmlFor='clientName'>Client Name</label>
+                </div>
+                <div className='col text-start'>
+                    <label htmlFor='clientEmail'>Client Email</label>
+                </div>
+            </div>
+            <div className='row'>
+                <div className='col-2 text-start'>
+                    {updatedClient.clientId}
+                </div>
+                <div className='col-5 text-start'>
+                    <input className='w-75' type='text' name='clientName' id='clientName' value={updatedClient.clientName} onChange={handleChanges} minLength={3} ></input>
+                </div>
+                <div className='col text-start'>
+                    <input className='w-75' type='text' name='clientEmail' id='clientEmail' pattern='^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$' title='Please enter a valid email address' value={updatedClient.clientEmail} onChange={handleChanges} ></input>
+                </div>
+            </div>
+            <div className='text-start'>
+                <br />
+                <button className='btn btn-outline-success' type='submit'>Update</button>
+            </div>
+        </form>     
     </>
   )
 }

@@ -62,50 +62,43 @@ const UpdateProject = (props) => {
                     return client
                 }
             })
-
             setClients(updatedClients)
             helper.setProject(helper)
-            props.setHelper({"client": theUpdated})
+            setHelper({"client": theUpdated})
             navigate(-1)
         }
     }
 
   return (
     <>
-        <table className='table table-borderless table-sm text-start'>
-        <thead>
-            <tr>
-                <th style={width}>
-                    <label htmlFor='save'>Manage Project</label>
-                </th>
-                <th style={width}>
-                    <label htmlFor='projectId'>Project Id</label>
-                </th>
-                <th style={width}>
+        <form onSubmit={onSubmit}>
+            <div className='row'>
+                <div className='col-2 text-start'>
+                    <label htmlFor='projectId'>Project ID</label>
+                </div>
+                <div className='col-5 text-start'>
                     <label htmlFor='projectName'>Project Name</label>
-                </th>
-                <th style={width}>
-                    <label htmlFor='projectDescription' >Project Description</label>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-            <td style={width}>
-        <button className='btn btn-sm btn-outline-success' name='save' id='save' onClick={onSubmit}>Save</button>
-        </td>
-        <td style={width}>
-            <label name='projectId' id='projectId'>{updatedProject.projectId}</label>
-        </td>
-        <td style={width}>
-            <input className='form-control form-control-sm' type='text' value={updatedProject.projectName} name='projectName' id='projectName' onChange={handleChanges} />
-        </td>
-        <td style={width}>
-            <input className='form-control form-control-sm' type='text' value={updatedProject.projectDescription} name='projectDescription' id='projectDescription' onChange={handleChanges} />
-        </td>
-            </tr>
-        </tbody>
-        </table>
+                </div>
+                <div className='col text-start'>
+                    <label htmlFor='projectDescription'>Project Description</label>
+                </div>
+            </div>
+            <div className='row'>
+                <div className='col-2 text-start'>
+                    {updatedProject.projectId}
+                </div>
+                <div className='col-5 text-start'>
+                    <input className='w-75' type='text' name='projectName' id='projectName' value={updatedProject.projectName} onChange={handleChanges} minLength={3} required ></input>
+                </div>
+                <div className='col text-start'>
+                    <input className='w-100' type='text' name='projectDescription' id='projectDescription' value={updatedProject.projectDescription} onChange={handleChanges} minLength={3} required ></input>
+                </div>
+            </div>
+            <div className='text-start'>
+                <br />
+                <button className='btn btn-outline-success' type='submit'>Update</button>
+            </div>
+        </form>
     </>
   )
 }
