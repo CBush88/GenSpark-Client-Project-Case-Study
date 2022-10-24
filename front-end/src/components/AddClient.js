@@ -49,7 +49,7 @@ const AddClient = () => {
 
   return (
     <div>
-        <form encType='multipart/form-data'>
+        <form onSubmit={onSubmit} encType='multipart/form-data'>
             <div className='row'>
                 <div className='col col-sm-2'>
                 <label htmlFor='clientName'>Client Name:</label>
@@ -64,7 +64,7 @@ const AddClient = () => {
                 <label htmlFor='clientEmail'>Client Email:</label>
                 </div>
                 <div className='col col-sm-10'>
-                <input type="text" name='clientEmail' id='clientEmail' pattern='/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/' className='form-control' placeholder='Client Email' onChange={handleChanges} />
+                <input type="text" name='clientEmail' id='clientEmail' pattern='^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$' className='form-control' placeholder='Client Email' onChange={handleChanges} />
             </div>
             </div>
             <br />
@@ -78,7 +78,7 @@ const AddClient = () => {
             </div>
             <br />
             <div className='text-start'>
-            <button className='btn btn-sm btn-outline-success' onClick={onSubmit}>Submit</button>
+            <button type='submit' className='btn btn-sm btn-outline-success'>Submit</button>
             </div>
         </form>
     </div>

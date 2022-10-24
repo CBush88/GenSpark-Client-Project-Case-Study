@@ -63,13 +63,13 @@ const AddProject = (props) => {
         
   return (
     <>
-        <form>
+        <form onSubmit={onSubmit}>
             <div className='row'>
                 <div className='col col-sm-3'>
                     <label htmlFor='projectName'>Project Name:</label>
                 </div>
                 <div className='col col-sm-9'>
-                    <input className='form-control' type='text' placeholder='Project Name' name='projectName' id='projectName' onChange={handleChanges} value={project.projectName} required={true} />
+                    <input className='form-control' type='text' placeholder='Project Name' name='projectName' id='projectName' onChange={handleChanges} value={project.projectName} required={true} minLength={3} />
                 </div>
             </div>
             <div className='row'>
@@ -77,11 +77,11 @@ const AddProject = (props) => {
                     <label htmlFor='projectDescription'>Project Description:</label>
                 </div>
                 <div className='col col-sm-9'>
-                    <input className='form-control' type='text' placeholder='Project Description' name='projectDescription' id='projectDescription' onChange={handleChanges} value={project.projectDescription} required={true} />
+                    <input className='form-control' type='text' placeholder='Project Description' name='projectDescription' id='projectDescription' onChange={handleChanges} value={project.projectDescription} required={true} minLength={3} />
                 </div>
             </div>
             <div className='text-start'>
-                <button className='btn btn-sm btn-success' onClick={onSubmit}>Add</button>
+                <button type='submit' className='btn btn-sm btn-success'>Add</button>
             </div>
         </form>
     </>
