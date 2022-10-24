@@ -32,7 +32,6 @@ const AddClient = () => {
                 ...client,
                 [e.target.name]: base64
             })
-            console.log(base64)
         }
         reader.readAsDataURL(e.target.files[0])
     }
@@ -41,6 +40,7 @@ const AddClient = () => {
         e.preventDefault()
         if(clientValidation(client)){
             addClient(client)
+            .then(res => console.log(res.data))
             .then(() => setClient(initialState))
             .then(() => navigate(-1))
             .catch((err) => console.log(err.response))
