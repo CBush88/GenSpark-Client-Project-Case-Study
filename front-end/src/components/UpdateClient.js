@@ -41,7 +41,7 @@ const UpdateClient = (props) => {
             }
         })
         setClients(updatedClients)
-        navigate("/")
+        navigate(-1)
     }
 
   return (
@@ -68,10 +68,10 @@ const UpdateClient = (props) => {
                         {updatedClient.clientId}
                     </td>
                     <td style={width}>
-                        <input className='form-control form-control-sm' type='text' value={updatedClient.clientName} name='clientName' id='clientName' onChange={handleChanges} />
+                        <input className='form-control form-control-sm' type='text' value={updatedClient.clientName} name='clientName' id='clientName' required onChange={handleChanges} />
                     </td>
                     <td style={width}>
-                        <input className='form-control form-control-sm' type='text' value={updatedClient.clientEmail} name='clientEmail' id='clientEmail' onChange={handleChanges} />
+                        <input className='form-control form-control-sm' type='text' value={updatedClient.clientEmail} name='clientEmail' id='clientEmail' pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" required onChange={handleChanges} />
                     </td>
                     <td style={width}>
                         <button className='btn btn-sm btn-outline-success' onClick={onSubmit}>Save</button>

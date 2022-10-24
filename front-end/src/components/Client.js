@@ -41,7 +41,7 @@ const Client = (props) => {
     }
 
     const onClickUpdateClient = () => {
-        props.setHelper({"client": client, "setClient": setClient})
+        setHelper({"client": client, "setClient": setClient})
         navigate("/updateClient")
     }
   return (

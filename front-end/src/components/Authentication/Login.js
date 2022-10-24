@@ -27,13 +27,13 @@ const Login = (props) => {
 
   return (
     <div>
+        <h5>Log in or Sign up</h5>
         <form onSubmit={authenticate} style={{margin:"auto"}} className='d-flex flex-column align-items-start w-50'>
-            <lable htmlFor='username' className='form-label label'>Username</lable>
+            <label htmlFor='username' className='form-label label'>Username</label>
             <input type='text' name='username' id='username' required={true} onChange={handleChanges} className='form-control form-control-lg' placeholder='Username' />
-            <br />
             <label htmlFor='password' className='form-label label'>Password</label>
             <input type='password' name='password' id='password' required={true} onChange={handleChanges} className='form-control form-control-lg' placeholder='Password' />
-            <br />
+            <label name='errLabel' id='errLabel' style={{color:"red"}}></label>
             <button type='submit' className='btn btn-primary mt-3'>Log In</button>
             <Link to="/signup" style={{marginTop:"1em"}} >Sign Up</Link>
         </form>

@@ -40,7 +40,7 @@ const AddClient = (props) => {
         e.preventDefault()
         addClient(client)
         .then(() => setClient(initialState))
-        .then(() => navigate("/"))
+        .then(() => navigate(-1))
         .catch((err) => console.log(err.response))
     }    
 
@@ -52,7 +52,7 @@ const AddClient = (props) => {
                 <label htmlFor='clientName'>Client Name:</label>
                 </div>
                 <div className='col col-sm-10'>
-                <input className='form-control' type="text" placeholder='Client Name' name='clientName' id='clientName' onChange={handleChanges} required={true} />
+                <input className='form-control' type="text" placeholder='Client Name' name='clientName' id='clientName' onChange={handleChanges} required={true} minLength={10} />
             </div>
             </div>
             <br />
@@ -61,17 +61,16 @@ const AddClient = (props) => {
                 <label htmlFor='clientEmail'>Client Email:</label>
                 </div>
                 <div className='col col-sm-10'>
-                <input className='form-control' type="text" placeholder='Client Email' name='clientEmail' id='clientEmail' onChange={handleChanges} required={true} />
+                <input type='text' pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" required={true} className='form-control' placeholder='Client Email' name='clientEmail' id='clientEmail' onChange={handleChanges} />
             </div>
             </div>
             <br />
-
             <div className='row'>
                 <div className='col col-sm-2'>
                 <label htmlFor='signedAgreement'>Signed Agreement:</label>
                 </div>
                 <div className='col col-sm-10'>
-                <input className='form-control' type="file" name='signedAgreement' id='signedAgreement' onChange={handleFile} accept="application/pdf" />
+                <input className='form-control' type="file" name='signedAgreement' id='signedAgreement' onChange={handleFile} accept="application/pdf" required={true} />
             </div>
             </div>
             <br />
