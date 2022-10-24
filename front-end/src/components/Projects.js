@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Project from './Project'
 import PropTypes from  'prop-types'
@@ -21,8 +21,13 @@ const Projects = (props) => {
 
     const [projects, setProjects] = useState(client.projects)
 
+    useEffect(() => {
+      setProjects(client.projects)
+    }, [props.client.projects])
+    
+
     const navToAdd = () => {
-        setHelper({"client": props.client, "setClient": setClient})
+        setHelper({"client": props.client})
         navigate("/addproject")
     }
 
