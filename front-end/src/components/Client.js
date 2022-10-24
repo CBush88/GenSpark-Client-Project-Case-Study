@@ -27,7 +27,6 @@ const Client = (props) => {
 
     const {clientId, clientName, clientEmail, projects, signedAgreement} = client
 
-    //breaks list project delete (comes back) enables single view switching
     useEffect(() => {
         if(needsRefresh){
             setClient(props.client)
