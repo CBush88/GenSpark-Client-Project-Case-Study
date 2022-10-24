@@ -3,7 +3,9 @@ import { getClientById } from '../services/ClientsData'
 import Client from './Client'
 import PropTypes from 'prop-types'
 
-const SingleClient = ({retrieveClients, helper, setHelper, clients, setClients}) => {  
+const SingleClient = (props) => {  
+
+    const {retrieveClients, helper, setHelper, clients, setClients} = props
     
     SingleClient.propTypes = {
         retrieveClients: PropTypes.func,
@@ -20,7 +22,7 @@ const SingleClient = ({retrieveClients, helper, setHelper, clients, setClients})
 
     const [client, setClient] = useState(initialClient)
     const [clientId, setClientId] = useState("-1")
-
+   
     const clientsArr = Array.from(clients)
 
     const handleChanges = (e) => {
@@ -28,13 +30,21 @@ const SingleClient = ({retrieveClients, helper, setHelper, clients, setClients})
     }
 
     const loadClient = () =>{
-        getClientById(clientId)
-        .then((res) => {
-            setClient(res.data)
-            setHelper({client: res.data})
-        })
-        .catch((err) => console.log(err.response))
+        if(clientId !== -1){
+            getClientById(clientId)
+            .then((res) => {
+                setClient(res.data)
+                setHelper({"client": res.data})
+            })
+            .catch((err) => console.log(err.response))
+        }
     }
+
+    useEffect(() => {
+        setClient(initialClient)
+        setClientId("-1")
+    }, [clients])
+    
 
     
     
@@ -43,7 +53,7 @@ const SingleClient = ({retrieveClients, helper, setHelper, clients, setClients})
     <div>
         <div className='row'>
         <label className='col-3' htmlFor='clientId'>Select a client to view</label>
-        <select className='col-5' name='clientId' id='clientId' defaultValue='-1' onChange={handleChanges} >
+        <select className='col-5' name='clientId' id='clientId' value={clientId} onChange={handleChanges} >
             <option disabled value='-1'>Select a client</option>
             {clientsArr.map((client) =>(
                 <option key={client.clientId} value={client.clientId}>
@@ -53,7 +63,7 @@ const SingleClient = ({retrieveClients, helper, setHelper, clients, setClients})
         </select>
         <button className='btn btn-sm btn-outline-success col-1' style={{marginLeft:"1em"}} onClick={loadClient} >Select</button>
         </div>
-        {client.clientId != null && <Client client={client} clients={clients} setClients={setClients} setHelper={setHelper} />}    
+        {client.clientId != null && <Client client={client} clients={clients} setClients={setClients} setHelper={setHelper} needsRefresh={true} />}    
     </div>
   )
 }
