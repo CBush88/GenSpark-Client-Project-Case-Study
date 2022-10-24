@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { updateProject } from '../services/ProjectsData'
 import PropTypes from 'prop-types'
+import { projectValidation } from '../services/Validation'
 
 const UpdateProject = (props) => {
 
@@ -29,41 +30,44 @@ const UpdateProject = (props) => {
         })
     }
 
-    const onSubmit = () => {
-        updateProject(updatedProject)
-        .then((res) => console.log(res.data))
-        .catch((err) => console.log(err.response))
-        const updatedProjects = helper.client.projects.map((project) => {
-            if(project.projectId === helper.project.projectId){
-                return updatedProject
-            }else{
-                return project
+    const onSubmit = (e) => {
+        e.preventDefault()
+        if(projectValidation(updatedProject)){
+            updateProject(updatedProject)
+            .then((res) => console.log(res.data))
+            .catch((err) => console.log(err.response))
+            const updatedProjects = helper.client.projects.map((project) => {
+                if(project.projectId === helper.project.projectId){
+                    return updatedProject
+                }else{
+                    return project
+                }
+            })
+            helper.setProjects(updatedProjects)
+
+            setUpdatedClient({...updatedClient, "projects": updatedProjects})
+
+            const theUpdated = {
+                "clientId": updatedClient.clientId,
+                "clientName": updatedClient.clientName,
+                "clientEmail": updatedClient.clientEmail,
+                "projects": updatedProjects,
+                "signedAgreement": updatedClient.signedAgreement
             }
-        })
-        helper.setProjects(updatedProjects)
+            
+            const updatedClients = clients.map(client => {
+                if(client.clientId === updatedClient.clientId){
+                    return theUpdated
+                }else{
+                    return client
+                }
+            })
 
-        setUpdatedClient({...updatedClient, "projects": updatedProjects})
-
-        const theUpdated = {
-            "clientId": updatedClient.clientId,
-            "clientName": updatedClient.clientName,
-            "clientEmail": updatedClient.clientEmail,
-            "projects": updatedProjects,
-            "signedAgreement": updatedClient.signedAgreement
+            setClients(updatedClients)
+            helper.setProject(helper)
+            props.setHelper({"client": theUpdated})
+            navigate(-1)
         }
-        
-        const updatedClients = clients.map(client => {
-            if(client.clientId === updatedClient.clientId){
-                return theUpdated
-            }else{
-                return client
-            }
-        })
-
-        setClients(updatedClients)
-        helper.setProject(helper)
-        props.setHelper({"client": theUpdated})
-        navigate(-1)
     }
 
   return (

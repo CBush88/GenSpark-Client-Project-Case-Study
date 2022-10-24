@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { updateClient } from '../services/ClientsData'
 import PropTypes from 'prop-types'
 import Clients from './Clients'
+import { clientValidation } from '../services/Validation'
 
 const UpdateClient = (props) => {
 
@@ -28,20 +29,22 @@ const UpdateClient = (props) => {
     const navigate = useNavigate()
 
     const onSubmit = () =>{
-        updateClient(updatedClient)
-        .then((res) => console.log(res.data))
-        .catch((err) => console.log(err.response))
-        helper.setClient(updatedClient)
-        setHelper({"client": updatedClient})
-        const updatedClients = clients.map((client) => {
-            if(client.clientId === updatedClient.clientId){
-                return updatedClient
-            }else{
-                return client
-            }
-        })
-        setClients(updatedClients)
-        navigate(-1)
+        if(clientValidation(updatedClient)){
+            updateClient(updatedClient)
+            .then((res) => console.log(res.data))
+            .catch((err) => console.log(err.response))
+            helper.setClient(updatedClient)
+            setHelper({"client": updatedClient})
+            const updatedClients = clients.map((client) => {
+                if(client.clientId === updatedClient.clientId){
+                    return updatedClient
+                }else{
+                    return client
+                }
+            })
+            setClients(updatedClients)
+            navigate(-1)
+        }
     }
 
   return (

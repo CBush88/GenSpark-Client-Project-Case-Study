@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { updateClient } from '../services/ClientsData'
 import PropTypes from 'prop-types'
+import { projectValidation } from '../services/Validation'
 
 const AddProject = (props) => {
 
@@ -34,28 +35,30 @@ const AddProject = (props) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        projects.push(project)
-        // setHelper({
-        //     ...helper.client,
-        //     "projects": projects
-        // })
-        updateClient(helper.client)
-        .then((res) => {
-            console.log(res.data)
-            helper.setClient(
-                res.data
-            )
-            const updatedClients = clients.map(client => {
-                if(client.clientId === helper.client.clientId){
-                    return res.data
-                }else{
-                    return client
-                }
+        if(projectValidation(project)){
+            projects.push(project)
+            // setHelper({
+            //     ...helper.client,
+            //     "projects": projects
+            // })
+            updateClient(helper.client)
+            .then((res) => {
+                console.log(res.data)
+                helper.setClient(
+                    res.data
+                )
+                const updatedClients = clients.map(client => {
+                    if(client.clientId === helper.client.clientId){
+                        return res.data
+                    }else{
+                        return client
+                    }
+                })
+                setClients(updatedClients)
             })
-            setClients(updatedClients)
-        })
-        .then(() => navigate(-1))
-        .catch(err => console.log(err.response))
+            .then(() => navigate(-1))
+            .catch(err => console.log(err.response))
+        }
     }
         
   return (

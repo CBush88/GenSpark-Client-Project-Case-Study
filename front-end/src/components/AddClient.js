@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { addClient } from '../services/ClientsData';
+import { clientValidation } from '../services/Validation';
 
-const AddClient = (props) => {
+const AddClient = () => {
 
     const initialState = {
         "clientName": "",
@@ -38,11 +39,13 @@ const AddClient = (props) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        addClient(client)
-        .then(() => setClient(initialState))
-        .then(() => navigate(-1))
-        .catch((err) => console.log(err.response))
-    }    
+        if(clientValidation(client)){
+            addClient(client)
+            .then(() => setClient(initialState))
+            .then(() => navigate(-1))
+            .catch((err) => console.log(err.response))
+        }
+    }
 
   return (
     <div>
@@ -52,7 +55,7 @@ const AddClient = (props) => {
                 <label htmlFor='clientName'>Client Name:</label>
                 </div>
                 <div className='col col-sm-10'>
-                <input className='form-control' type="text" placeholder='Client Name' name='clientName' id='clientName' onChange={handleChanges} required={true} minLength={10} />
+                <input className='form-control' type="text" placeholder='Client Name' name='clientName' id='clientName' onChange={handleChanges} required={true} minLength={3} />
             </div>
             </div>
             <br />
@@ -61,7 +64,7 @@ const AddClient = (props) => {
                 <label htmlFor='clientEmail'>Client Email:</label>
                 </div>
                 <div className='col col-sm-10'>
-                <input type='text' pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" required={true} className='form-control' placeholder='Client Email' name='clientEmail' id='clientEmail' onChange={handleChanges} />
+                <input type="text" name='clientEmail' id='clientEmail' pattern='/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/' className='form-control' placeholder='Client Email' onChange={handleChanges} />
             </div>
             </div>
             <br />
