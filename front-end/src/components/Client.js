@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { deleteClient } from '../services/ClientsData'
 import AllPages from './AllPages'
@@ -26,6 +26,11 @@ const Client = (props) => {
 
     const {clientId, clientName, clientEmail, projects, signedAgreement} = client
 
+    useEffect(() => {
+      setClient(props.client)
+    }, [props.client])
+    
+
     const navigate = useNavigate()
 
     const pdfToggle = () =>(
@@ -38,6 +43,7 @@ const Client = (props) => {
         .catch(err => console.log(err.response))
         const updatedClients = clients.filter(client => client.clientId !== props.client.clientId)
         setClients(updatedClients)
+        setHelper({"client": null})
     }
 
     const onClickUpdateClient = () => {
