@@ -9,12 +9,13 @@ import PropTypes from 'prop-types'
 
 const Client = (props) => {
 
-    const {setHelper, clients, setClients} = props
+    const {setHelper, clients, setClients, needsRefresh} = props
 
     Client.propTypes = {
         setHelper: PropTypes.func,
         clients: PropTypes.array,
         setClients: PropTypes.func,
+        needsRefresh: PropTypes.bool,
     }
 
 
@@ -26,8 +27,11 @@ const Client = (props) => {
 
     const {clientId, clientName, clientEmail, projects, signedAgreement} = client
 
+    //breaks list project delete (comes back) enables single view switching
     useEffect(() => {
-      setClient(props.client)
+        if(needsRefresh){
+            setClient(props.client)
+        }
     }, [props.client])
     
 
