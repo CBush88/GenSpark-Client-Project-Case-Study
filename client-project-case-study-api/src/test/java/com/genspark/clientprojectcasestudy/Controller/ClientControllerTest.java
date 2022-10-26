@@ -30,8 +30,6 @@ class ClientControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    @Autowired
-    WebApplicationContext webApplicationContext;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -47,7 +45,6 @@ class ClientControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         client1 = new Client(1, "Client One", "Client1@Gmail.com", projects, "pdf");
         client2 = new Client(2, "Client Two", "Client2@Yahoo.com", null, "");
         clients = List.of(client1, client2);
