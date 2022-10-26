@@ -3,6 +3,7 @@ package com.genspark.clientprojectcasestudy.Entity;
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tbl_client", uniqueConstraints = {
@@ -96,5 +97,18 @@ public class Client {
                 ", projects=" + projects +
                 ", signedAgreement=" + signedAgreement +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return clientId == client.clientId && Objects.equals(clientName, client.clientName) && Objects.equals(clientEmail, client.clientEmail) && Objects.equals(projects, client.projects) && Objects.equals(signedAgreement, client.signedAgreement);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clientId, clientName, clientEmail, projects, signedAgreement);
     }
 }

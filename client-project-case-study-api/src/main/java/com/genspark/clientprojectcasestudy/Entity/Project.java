@@ -1,6 +1,7 @@
 package com.genspark.clientprojectcasestudy.Entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tbl_project")
@@ -61,5 +62,18 @@ public class Project {
                 ", projectName='" + projectName + '\'' +
                 ", projectDescription='" + projectDescription + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return projectId == project.projectId && Objects.equals(projectName, project.projectName) && Objects.equals(projectDescription, project.projectDescription);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, projectName, projectDescription);
     }
 }
