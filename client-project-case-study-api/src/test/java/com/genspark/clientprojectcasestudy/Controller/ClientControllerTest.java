@@ -1,7 +1,6 @@
 package com.genspark.clientprojectcasestudy.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.genspark.clientprojectcasestudy.Dao.ClientDao;
 import com.genspark.clientprojectcasestudy.Entity.Client;
 import com.genspark.clientprojectcasestudy.Entity.Project;
 import com.genspark.clientprojectcasestudy.Service.ClientService;
@@ -19,12 +18,10 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest()
 @AutoConfigureMockMvc
@@ -40,9 +37,6 @@ class ClientControllerTest {
     ObjectMapper objectMapper;
 
     @MockBean
-    ClientDao clientDao;
-
-    @Autowired
     ClientService clientService;
 
     List<Project> projects = List.of(new Project(1, "Super Cool Project", "Actually kinda lame"));
@@ -61,30 +55,65 @@ class ClientControllerTest {
 
     @Test
     void getClients() throws Exception {
-        when(this.clientDao.findAll()).thenReturn(clients);
+        when(this.clientService.getClients()).thenReturn(clients);
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/clients")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[1].clientName", is("Client Two"))
-        );
+                .andExpect(jsonPath("$[1].clientName", is("Client Two")))
+                .andExpect(content().string(objectMapper.writeValueAsString(clients))
+                );
     }
 
     @Test
-    void getClientById() {
+    void getClientById() throws Exception {
+        when(this.clientService.getClientById(1)).thenReturn(client1);
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/clients/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.clientName", is("Client One")))
+                .andExpect(content().string(objectMapper.writeValueAsString(client1)));
     }
 
     @Test
-    void addClient() {
+    void addClient() throws Exception {
+        Client client3 = new Client(3, "Client Three", "client3@client.com", null, "");
+        String client3Json = objectMapper.writeValueAsString(client3);
+        when(this.clientService.addClient(client3)).thenReturn(client3);
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/clients")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(client3Json))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.clientName", is("Client Three")))
+                .andExpect(content().string(client3Json));
     }
 
     @Test
-    void updateClient() {
+    void updateClient() throws Exception {
+        String client2Json = objectMapper.writeValueAsString(client2);
+        when(this.clientService.updateClient(client2)).thenReturn(client2);
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/clients")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(client2Json))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.clientName", is("Client Two")))
+                .andExpect(content().string(client2Json));
     }
 
     @Test
-    void deleteClient() {
+    void deleteClient() throws Exception {
+        when(this.clientService.deleteClient(1)).thenReturn("Deleted Successfully");
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/clients/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Deleted Successfully"));
     }
 
 
