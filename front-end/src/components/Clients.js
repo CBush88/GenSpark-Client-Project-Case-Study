@@ -44,7 +44,7 @@ const Clients = (props) => {
             </table>
                 {clients.map(client => (
                     <span key={client.clientId}>
-                        <Client client={client} setHelper={setHelper} clients={clients} setClients={setClients} />
+                        <Client client={client} setHelper={setHelper} clients={clients} setClients={setClients} needsRefresh={false} />
                     </span>
                 ))}
         <br />

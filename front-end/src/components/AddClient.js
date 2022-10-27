@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { addClient } from '../services/ClientsData';
+import { clientValidation } from '../services/Validation';
 
-const AddClient = (props) => {
+const AddClient = () => {
 
     const initialState = {
         "clientName": "",
@@ -31,28 +32,30 @@ const AddClient = (props) => {
                 ...client,
                 [e.target.name]: base64
             })
-            console.log(base64)
         }
         reader.readAsDataURL(e.target.files[0])
     }
 
     const onSubmit = (e) => {
         e.preventDefault()
-        addClient(client)
-        .then(() => setClient(initialState))
-        .then(() => navigate("/"))
-        .catch((err) => console.log(err.response))
-    }    
+        if(clientValidation(client)){
+            addClient(client)
+            .then(res => console.log(res.data))
+            .then(() => setClient(initialState))
+            .then(() => navigate(-1))
+            .catch((err) => console.log(err.response))
+        }
+    }
 
   return (
     <div>
-        <form encType='multipart/form-data'>
+        <form onSubmit={onSubmit} encType='multipart/form-data'>
             <div className='row'>
                 <div className='col col-sm-2'>
                 <label htmlFor='clientName'>Client Name:</label>
                 </div>
                 <div className='col col-sm-10'>
-                <input className='form-control' type="text" placeholder='Client Name' name='clientName' id='clientName' onChange={handleChanges} required={true} />
+                <input className='form-control' type="text" placeholder='Client Name' name='clientName' id='clientName' onChange={handleChanges} required={true} minLength={3} />
             </div>
             </div>
             <br />
@@ -61,22 +64,21 @@ const AddClient = (props) => {
                 <label htmlFor='clientEmail'>Client Email:</label>
                 </div>
                 <div className='col col-sm-10'>
-                <input className='form-control' type="text" placeholder='Client Email' name='clientEmail' id='clientEmail' onChange={handleChanges} required={true} />
+                <input type="text" name='clientEmail' id='clientEmail' pattern='^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$' className='form-control' placeholder='Client Email' onChange={handleChanges} />
             </div>
             </div>
             <br />
-
             <div className='row'>
                 <div className='col col-sm-2'>
                 <label htmlFor='signedAgreement'>Signed Agreement:</label>
                 </div>
                 <div className='col col-sm-10'>
-                <input className='form-control' type="file" name='signedAgreement' id='signedAgreement' onChange={handleFile} accept="application/pdf" />
+                <input className='form-control' type="file" name='signedAgreement' id='signedAgreement' onChange={handleFile} accept="application/pdf" required={true} />
             </div>
             </div>
             <br />
             <div className='text-start'>
-            <button className='btn btn-sm btn-outline-success' onClick={onSubmit}>Submit</button>
+            <button type='submit' className='btn btn-sm btn-outline-success'>Submit</button>
             </div>
         </form>
     </div>

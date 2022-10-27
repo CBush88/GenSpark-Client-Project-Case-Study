@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { deleteClient } from '../services/ClientsData'
 import AllPages from './AllPages'
@@ -9,12 +9,13 @@ import PropTypes from 'prop-types'
 
 const Client = (props) => {
 
-    const {setHelper, clients, setClients} = props
+    const {setHelper, clients, setClients, needsRefresh} = props
 
     Client.propTypes = {
         setHelper: PropTypes.func,
         clients: PropTypes.array,
         setClients: PropTypes.func,
+        needsRefresh: PropTypes.bool,
     }
 
 
@@ -25,6 +26,13 @@ const Client = (props) => {
     const [client, setClient] = useState(props.client)
 
     const {clientId, clientName, clientEmail, projects, signedAgreement} = client
+
+    useEffect(() => {
+        if(needsRefresh){
+            setClient(props.client)
+        }
+    }, [props.client])
+    
 
     const navigate = useNavigate()
 
@@ -38,10 +46,11 @@ const Client = (props) => {
         .catch(err => console.log(err.response))
         const updatedClients = clients.filter(client => client.clientId !== props.client.clientId)
         setClients(updatedClients)
+        setHelper({"client": null})
     }
 
     const onClickUpdateClient = () => {
-        props.setHelper({"client": client, "setClient": setClient})
+        setHelper({"client": client, "setClient": setClient})
         navigate("/updateClient")
     }
   return (
