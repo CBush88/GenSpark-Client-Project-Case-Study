@@ -49,7 +49,7 @@ class ProjectControllerTest {
     }
 
     @Test
-    void getProjects() throws Exception {
+    void getProjectsTest() throws Exception {
         when(projectService.getProjects()).thenReturn(projectList);
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/projects")
@@ -61,7 +61,7 @@ class ProjectControllerTest {
     }
 
     @Test
-    void getProjectById() throws Exception {
+    void getProjectByIdTest() throws Exception {
         when(projectService.getProjectById(1)).thenReturn(project1);
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/projects/1")
@@ -72,7 +72,7 @@ class ProjectControllerTest {
     }
 
     @Test
-    void addProject() throws Exception {
+    void addProjectTest() throws Exception {
         Project project4 = new Project(4, "Small Project", "Small team project");
         when(projectService.addProject(project4)).thenReturn(project4);
         mockMvc.perform(MockMvcRequestBuilders
@@ -86,7 +86,7 @@ class ProjectControllerTest {
     }
 
     @Test
-    void updateProject() throws Exception {
+    void updateProjectTest() throws Exception {
         when(projectService.updateProject(project3)).thenReturn(project3);
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/projects")
@@ -99,7 +99,7 @@ class ProjectControllerTest {
     }
 
     @Test
-    void deleteProject() throws Exception {
+    void deleteProjectTest() throws Exception {
         when(projectService.deleteProject(1)).thenReturn("Deleted Successfully");
         mockMvc.perform(MockMvcRequestBuilders
                 .delete("/projects/1")

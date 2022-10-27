@@ -37,35 +37,35 @@ class ProjectServiceTest {
     }
 
     @Test
-    void getProjects() {
+    void getProjectsTest() {
         when(this.projectDao.findAll()).thenReturn(projectList);
         List<Project> testList = this.projectService.getProjects();
         assertEquals(testList, List.of(project1, project2, project3));
     }
 
     @Test
-    void getProjectById() {
+    void getProjectByIdTest() {
         when(this.projectDao.findById(2)).thenReturn(Optional.of(project2));
         Project testProject = this.projectService.getProjectById(2);
         assertEquals(testProject, project2);
     }
 
     @Test
-    void addProject() {
+    void addProjectTest() {
         when(this.projectDao.save(project1)).thenReturn(project1);
         Project testProject = this.projectService.addProject(project1);
         assertEquals(testProject, project1);
     }
 
     @Test
-    void updateProject() {
+    void updateProjectTest() {
         when(this.projectDao.save(project3)).thenReturn(project3);
         Project testProject = this.projectService.addProject(project3);
         assertEquals(testProject, project3);
     }
 
     @Test
-    void deleteProject() {
+    void deleteProjectTest() {
         this.projectDao.deleteById(1);
         verify(projectDao, times(1)).deleteById(1);
     }

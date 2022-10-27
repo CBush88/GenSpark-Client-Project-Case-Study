@@ -37,35 +37,35 @@ class UserServiceTest {
     }
 
     @Test
-    void getUsers() {
+    void getUsersTest() {
         when(this.userDao.findAll()).thenReturn(userList);
         List<User> testList = this.userService.getUsers();
         assertEquals(testList, userList);
     }
 
     @Test
-    void getUserById() {
+    void getUserByIdTest() {
         when(this.userDao.findById(1)).thenReturn(Optional.of(user1));
         User testUser = this.userService.getUserById(1);
         assertEquals(testUser, user1);
     }
 
     @Test
-    void addUser() {
+    void addUserTest() {
         when(this.userDao.save(user2)).thenReturn(user2);
         User testUser = this.userService.addUser(user2);
         assertEquals(testUser, user2);
     }
 
     @Test
-    void updateUser() {
+    void updateUserTest() {
         when(this.userDao.save(user3)).thenReturn(user3);
         User testUser = this.userService.updateUser(user3);
         assertEquals(testUser, user3);
     }
 
     @Test
-    void deleteUser() {
+    void deleteUserTest() {
         this.userService.deleteUser(1);
         verify(this.userDao, times(1)).deleteById(1);
     }

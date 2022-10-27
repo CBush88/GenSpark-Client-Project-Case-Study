@@ -51,7 +51,7 @@ class ClientControllerTest {
     }
 
     @Test
-    void getClients() throws Exception {
+    void getClientsTest() throws Exception {
         when(this.clientService.getClients()).thenReturn(clients);
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/clients")
@@ -64,7 +64,7 @@ class ClientControllerTest {
     }
 
     @Test
-    void getClientById() throws Exception {
+    void getClientByIdTest() throws Exception {
         when(this.clientService.getClientById(1)).thenReturn(client1);
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/clients/1")
@@ -75,7 +75,7 @@ class ClientControllerTest {
     }
 
     @Test
-    void addClient() throws Exception {
+    void addClientTest() throws Exception {
         Client client3 = new Client(3, "Client Three", "client3@client.com", null, "");
         String client3Json = objectMapper.writeValueAsString(client3);
         when(this.clientService.addClient(client3)).thenReturn(client3);
@@ -90,7 +90,7 @@ class ClientControllerTest {
     }
 
     @Test
-    void updateClient() throws Exception {
+    void updateClientTest() throws Exception {
         String client2Json = objectMapper.writeValueAsString(client2);
         when(this.clientService.updateClient(client2)).thenReturn(client2);
         mockMvc.perform(MockMvcRequestBuilders
@@ -104,7 +104,7 @@ class ClientControllerTest {
     }
 
     @Test
-    void deleteClient() throws Exception {
+    void deleteClientTest() throws Exception {
         when(this.clientService.deleteClient(1)).thenReturn("Deleted Successfully");
         mockMvc.perform(MockMvcRequestBuilders
                 .delete("/clients/1")
