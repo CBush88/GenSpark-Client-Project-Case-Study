@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const clientValidation = (client) =>{
     let isValidClient = false
     let isValidFile = false
@@ -20,6 +18,19 @@ export const clientValidation = (client) =>{
         alert("Invalid agreement")
     }
     return (isValidClient && isValidFile)
+}
+
+export const emailAvailable = (clientToCheck, clients) =>{
+    let isAvailable = true
+    clients.forEach(client => {
+        if(client.clientId !== clientToCheck.clientId){
+            if(client.clientEmail.toLowerCase() === clientToCheck.clientEmail.toLowerCase()){
+                isAvailable = false
+                alert("Email used by another client")
+            }
+        }
+    })
+    return isAvailable
 }
 
 export const projectValidation = (project) =>{

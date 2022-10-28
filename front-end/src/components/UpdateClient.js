@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { updateClient } from '../services/ClientsData'
 import PropTypes from 'prop-types'
-import Clients from './Clients'
-import { clientValidation } from '../services/Validation'
+import { clientValidation, emailAvailable } from '../services/Validation'
 
 const UpdateClient = (props) => {
 
@@ -12,10 +11,10 @@ const UpdateClient = (props) => {
     UpdateClient.propTypes = {
         helper: PropTypes.object,
         setHelper: PropTypes.func,
+        clients: PropTypes.array,
+        setClients: PropTypes.func,
     }
 
-
-    const width = {width:"20%"}
 
     const [updatedClient, setUpdatedClient] = useState(helper.client)
 
@@ -30,7 +29,7 @@ const UpdateClient = (props) => {
 
     const onSubmit = (e) =>{
         e.preventDefault()
-        if(clientValidation(updatedClient)){
+        if(clientValidation(updatedClient) && emailAvailable(updatedClient, clients)){
             updateClient(updatedClient)
             .then((res) => console.log(res.data))
             .catch((err) => console.log(err.response))
