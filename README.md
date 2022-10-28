@@ -18,4 +18,4 @@ The API portion has been built with Spring Boot.<br />
 The database is implemented with MySQL.<br />
 ![MySQL](https://user-images.githubusercontent.com/109172533/196455213-44ad6da9-5df8-4ed1-b078-cf5650164ab1.png)
 
-This ReadMe as well as the project are currently WIP.
+Much of the heavy lifting is being implemented in react so that I can better understand it.

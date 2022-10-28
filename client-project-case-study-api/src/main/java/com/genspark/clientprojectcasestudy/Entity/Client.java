@@ -24,6 +24,7 @@ public class Client {
 
     private String clientName;
 
+    @Column(unique = true)
     private String clientEmail;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -34,7 +35,7 @@ public class Client {
     private List<Project> projects;
 
     @Lob
-//    @Column(name = "signed_agreement", nullable = false)
+    @Column(name = "signed_agreement", nullable = false)
     private String signedAgreement;
 
     public Client() {

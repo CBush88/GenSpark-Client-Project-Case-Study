@@ -1,9 +1,16 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { addClient } from '../services/ClientsData';
-import { clientValidation } from '../services/Validation';
+import { clientValidation, emailAvailable } from '../services/Validation';
+import PropTypes from 'prop-types'
 
-const AddClient = () => {
+const AddClient = (props) => {
+
+    AddClient.propTypes = {
+        clients: PropTypes.array,
+    }
+
+    const clients = props;  //Somehow not an array??
 
     const initialState = {
         "clientName": "",
@@ -38,7 +45,7 @@ const AddClient = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if(clientValidation(client)){
+        if(clientValidation(client) && emailAvailable(client, props.clients)){
             addClient(client)
             .then(res => console.log(res.data))
             .then(() => setClient(initialState))

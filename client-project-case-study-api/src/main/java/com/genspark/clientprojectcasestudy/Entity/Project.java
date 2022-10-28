@@ -18,6 +18,7 @@ public class Project {
     )
     private int projectId;
 
+    @Column(nullable = false)
     private String projectName;
 
     private String projectDescription;

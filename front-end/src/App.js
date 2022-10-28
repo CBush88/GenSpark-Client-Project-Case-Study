@@ -84,7 +84,7 @@ function App() {
           <Route path='/clients' element={<Clients clients={clients} setClients={setClients} setHelper={setHelper} retrieveClients={retrieveClients} />} />
           <Route path='/client' element={<SingleClient retrieveClients={retrieveClients} helper={helper} setHelper={setHelper} setClients={setClients} clients={clients} />} />
           <Route path='/addproject' element={<AddProject helper={helper} setHelper={setHelper} setClients={setClients} clients={clients} />} />
-          <Route path='/addclient' element={<AddClient />} />
+          <Route path='/addclient' element={<AddClient clients={clients} />} />
           <Route path='/updateclient' element={<UpdateClient helper={helper} setHelper={setHelper} clients={clients} setClients={setClients} />} />
           <Route path='/updateproject' element={<UpdateProject helper={helper} setHelper={setHelper} clients={clients} setClients={setClients} />} />
         </Routes>
