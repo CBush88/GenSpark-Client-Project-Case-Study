@@ -42,13 +42,13 @@ const SignUp = (props) => {
     }
 
     const checkAvailable = () =>{
-        let scopeIsAnnoying = true
+        let isUsernameAvailable = true
         users.forEach((user) => {
             if(user.username === newUser.username){
-                scopeIsAnnoying = false
+                isUsernameAvailable = false
             }
         })
-        return scopeIsAnnoying
+        return isUsernameAvailable
     }
 
     const handleSubmit = (e) =>{
