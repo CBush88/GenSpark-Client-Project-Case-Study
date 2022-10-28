@@ -15,8 +15,6 @@ const UpdateProject = (props) => {
     }
     
 
-    const width={width:"20%"}
-
     const [updatedClient, setUpdatedClient] = useState(helper.client)  //Why doesn't this do anything?!?!?!
 
     const [updatedProject, setUpdatedProject] = useState(helper.project)
