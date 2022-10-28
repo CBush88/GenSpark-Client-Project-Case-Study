@@ -17,8 +17,11 @@ public class User {
             generator = "users_seq"
     )
     private int userId;
+    @Column(unique = true)
     private String username;
     private String password;
+
+    @Column(columnDefinition = "varchar(255) default 'view'")
     private String role;
 
     public User() {
