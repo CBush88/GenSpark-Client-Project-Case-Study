@@ -32,6 +32,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User addUser(User user) {
         log.info("Made request to User Service. [method=addUser({})]", "user");
+        if(user.getRole().equals("")){
+            user.setRole("view");
+        }
         return this.userDao.save(user);
     }
 

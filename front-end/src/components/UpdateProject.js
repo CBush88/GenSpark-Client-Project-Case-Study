@@ -6,12 +6,13 @@ import { projectValidation } from '../services/Validation'
 
 const UpdateProject = (props) => {
 
-    const {helper, setHelper, clients, setClients} = props
+    const {helper, setHelper, clients, setClients, token} = props
 
     UpdateProject.propTypes = {
         helper: PropTypes.object,
         clients: PropTypes.array,
         setClients: PropTypes.func,
+        token: PropTypes.object,
     }
     
 
@@ -92,10 +93,10 @@ const UpdateProject = (props) => {
                     <input className='w-100' type='text' name='projectDescription' id='projectDescription' value={updatedProject.projectDescription} onChange={handleChanges} minLength={3} required ></input>
                 </div>
             </div>
-            <div className='text-start'>
+            {(token.role === "view")? "" : <div className='text-start'>
                 <br />
                 <button className='btn btn-outline-success' type='submit'>Update</button>
-            </div>
+            </div>}
         </form>
     </>
   )

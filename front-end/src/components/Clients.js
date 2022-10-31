@@ -5,7 +5,7 @@ import Client from './Client';
 
 const Clients = (props) => {
 
-    const {clients, setClients, setHelper, retrieveClients} = props
+    const {clients, setClients, setHelper, retrieveClients, token} = props
 
     Clients.propTypes = {
         props: PropTypes.object,
@@ -13,6 +13,7 @@ const Clients = (props) => {
         setClients: PropTypes.func,
         setHelper: PropTypes.func,
         retrieveClients: PropTypes.func,
+        token: PropTypes.object,
     }
 
     useEffect(() => {
@@ -36,21 +37,21 @@ const Clients = (props) => {
                     <th style={width}>
                         Client Email
                     </th>
-                    <th style={width}>
+                    {(token.role === "view")? "" : <th style={width}>
                         Manage Client
-                    </th>
+                    </th>}
                 </tr>
             </thead>
             </table>
                 {clients.map(client => (
                     <span key={client.clientId}>
-                        <Client client={client} setHelper={setHelper} clients={clients} setClients={setClients} needsRefresh={false} />
+                        <Client client={client} setHelper={setHelper} clients={clients} setClients={setClients} needsRefresh={false} token={token} />
                     </span>
                 ))}
         <br />
-        <div className='text-end' style={{marginRight:"5em"}}>
+        {(token.role === "view")? "" :<div className='text-end' style={{marginRight:"5em"}}>
             <Link to="/addclient"><button className='btn btn-small btn-outline-success'>Add Client</button></Link>
-        </div>
+        </div>}
     </>
   )
 }

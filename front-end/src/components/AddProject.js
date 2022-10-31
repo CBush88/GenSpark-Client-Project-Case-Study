@@ -6,13 +6,14 @@ import { projectValidation } from '../services/Validation'
 
 const AddProject = (props) => {
 
-    const {helper, setHelper, setClients, clients} = props
+    const {helper, setHelper, setClients, clients, token} = props
 
     AddProject.propTypes = {
         helper: PropTypes.object,
         setHelper: PropTypes.func,
         setClients: PropTypes.func,
-        clients: PropTypes.array
+        clients: PropTypes.array,
+        token: PropTypes.object,
     }
 
     const navigate = useNavigate()
@@ -74,9 +75,9 @@ const AddProject = (props) => {
                     <input className='form-control' type='text' placeholder='Project Description' name='projectDescription' id='projectDescription' onChange={handleChanges} value={project.projectDescription} required={true} minLength={3} />
                 </div>
             </div>
-            <div className='text-start'>
+            {(token.role === "view")? "" : <div className='text-start'>
                 <button type='submit' className='btn btn-sm btn-success'>Add</button>
-            </div>
+            </div>}
         </form>
     </>
   )

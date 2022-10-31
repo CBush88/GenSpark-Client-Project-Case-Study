@@ -5,7 +5,7 @@ import PropTypes from  'prop-types'
 
 const Projects = (props) => {
 
-    const {client, setClient, clients, setClients, setHelper} = props
+    const {client, setClient, clients, setClients, setHelper, token} = props
 
     Projects.propTypes = {
         client: PropTypes.object,
@@ -13,6 +13,7 @@ const Projects = (props) => {
         clients: PropTypes.array,
         setClients: PropTypes.func,
         setHelper: PropTypes.func,
+        token: PropTypes.object,
     }
 
     const width = {width:"20%"}
@@ -36,9 +37,9 @@ const Projects = (props) => {
     <table className='table table-borderless table-sm text-start'>
         <thead>
             <tr>
-                <th style={width}>
+                {(token.role === "view")? "" : <th style={width}>
                     Manage Project
-                </th>
+                </th>}
                 <th style={width}>
                     Project Id
                 </th>
@@ -53,14 +54,14 @@ const Projects = (props) => {
         <tbody>
             {projects.map(project => (
                 <tr key={project.projectId}>
-                    <Project project={project} projects={projects} setProjects={setProjects} client={client} setClient={setClient} setHelper={setHelper} clients={clients} setClients={setClients} />
+                    <Project project={project} projects={projects} setProjects={setProjects} client={client} setClient={setClient} setHelper={setHelper} clients={clients} setClients={setClients} token={token} />
                 </tr>
             ))}
         </tbody>
     </table>
-    <div className='text-start'>
+    {(token.role === "view")? "" :<div className='text-start'>
     <button className='btn btn-sm btn-outline-success' onClick={navToAdd} >Add Project</button>
-    </div>
+    </div>}
     </>
   )
 }

@@ -47,7 +47,7 @@ function App() {
     users.forEach(user =>{
       if(user.username === userAttempt.username){
         if(bcrypt.compareSync(userAttempt.password, user.password)){
-          setToken({username: userAttempt.userName, role: user.role})
+          setToken({"username": user.username, "role": user.role})
         }
       }
     })
@@ -55,6 +55,7 @@ function App() {
       const errLabel = document.getElementById('errLabel')
       errLabel.textContent = "Invalid username or password!"
     }
+    alert(JSON.stringify(token))
   }
 
   if(token === null){
@@ -81,12 +82,12 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home userAttempt={userAttempt} setUserAttempt={setUserAttempt} retrieveUsers={retrieveUsers} authenticate={authenticate} token={token} />} />
-          <Route path='/clients' element={<Clients clients={clients} setClients={setClients} setHelper={setHelper} retrieveClients={retrieveClients} />} />
-          <Route path='/client' element={<SingleClient retrieveClients={retrieveClients} helper={helper} setHelper={setHelper} setClients={setClients} clients={clients} />} />
-          <Route path='/addproject' element={<AddProject helper={helper} setHelper={setHelper} setClients={setClients} clients={clients} />} />
-          <Route path='/addclient' element={<AddClient clients={clients} />} />
-          <Route path='/updateclient' element={<UpdateClient helper={helper} setHelper={setHelper} clients={clients} setClients={setClients} />} />
-          <Route path='/updateproject' element={<UpdateProject helper={helper} setHelper={setHelper} clients={clients} setClients={setClients} />} />
+          <Route path='/clients' element={<Clients clients={clients} setClients={setClients} setHelper={setHelper} retrieveClients={retrieveClients} token={token} />} />
+          <Route path='/client' element={<SingleClient retrieveClients={retrieveClients} helper={helper} setHelper={setHelper} setClients={setClients} clients={clients} token={token} />} />
+          <Route path='/addproject' element={<AddProject helper={helper} setHelper={setHelper} setClients={setClients} clients={clients} token={token} />} />
+          <Route path='/addclient' element={<AddClient clients={clients} token={token} />} />
+          <Route path='/updateclient' element={<UpdateClient helper={helper} setHelper={setHelper} clients={clients} setClients={setClients} token={token} />} />
+          <Route path='/updateproject' element={<UpdateProject helper={helper} setHelper={setHelper} clients={clients} setClients={setClients} token={token} />} />
         </Routes>
         <Footer />
       </Router>

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 const Project = (props) => {
 
-    const {projects, setProjects, clients, setClients, client, setClient, setHelper} = props
+    const {projects, setProjects, clients, setClients, client, setClient, setHelper, token} = props
 
     Project.propTypes = {
         project: PropTypes.object,
@@ -16,6 +16,7 @@ const Project = (props) => {
         client: PropTypes.object,
         setClient: PropTypes.func,
         setHelper: PropTypes.func,
+        token: PropTypes.object,
     }
 
     const [project, setProject] = useState(props.project)
@@ -59,10 +60,10 @@ const Project = (props) => {
 
   return (
     <>
-        <td style={width}>
+        {(token.role === "view")? "" : <td style={width}>
         <button className='btn btn-sm btn-outline-primary' onClick={onClickUpdateProject}>Update</button>
         <button className='btn btn-sm btn-outline-danger' style={margin} onClick={onClickDeleteProject}>Delete</button>
-        </td>
+        </td>}
         <td style={width}>
             {project.projectId}
         </td>
