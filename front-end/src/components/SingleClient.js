@@ -5,13 +5,14 @@ import PropTypes from 'prop-types'
 
 const SingleClient = (props) => {  
 
-    const {retrieveClients, helper, setHelper, clients, setClients} = props
+    const {retrieveClients, helper, setHelper, clients, setClients, token} = props
     
     SingleClient.propTypes = {
         retrieveClients: PropTypes.func,
         setHelper: PropTypes.func,
         clients: PropTypes.array,
         setClients: PropTypes.func,
+        token: PropTypes.object,
     }
     
     useEffect(() => {
@@ -63,7 +64,7 @@ const SingleClient = (props) => {
         </select>
         <button className='btn btn-sm btn-outline-success col-1' style={{marginLeft:"1em"}} onClick={loadClient} >Select</button>
         </div>
-        {client.clientId != null && <Client client={client} clients={clients} setClients={setClients} setHelper={setHelper} needsRefresh={true} />}    
+        {client.clientId != null && <Client client={client} clients={clients} setClients={setClients} setHelper={setHelper} needsRefresh={true} token={token} />}    
     </div>
   )
 }

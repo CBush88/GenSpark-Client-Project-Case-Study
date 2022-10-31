@@ -9,13 +9,14 @@ import PropTypes from 'prop-types'
 
 const Client = (props) => {
 
-    const {setHelper, clients, setClients, needsRefresh} = props
+    const {setHelper, clients, setClients, needsRefresh, token} = props
 
     Client.propTypes = {
         setHelper: PropTypes.func,
         clients: PropTypes.array,
         setClients: PropTypes.func,
         needsRefresh: PropTypes.bool,
+        token: PropTypes.object,
     }
 
 
@@ -67,14 +68,14 @@ const Client = (props) => {
                     <td style={width}>
                         {clientEmail}
                     </td>
-                    <td style={width}>
+                    {(token.role === "view")? "" : <td style={width}>
                         <button className='btn btn-sm btn-outline-primary' onClick={onClickUpdateClient}>Update</button>
                         <button className='btn btn-sm btn-outline-danger' style={margin} onClick={onClickDeleteClient}>Delete</button>
-                    </td>
+                    </td> }
                 </tr>
             </tbody>
         </table>
-        <Projects client={client} setClient={setClient} clients={clients} setClients={setClients} setHelper={setHelper} />
+        <Projects client={client} setClient={setClient} clients={clients} setClients={setClients} setHelper={setHelper} token={token} />
         <br />
         <button className={`${signedAgreement == null?"invisible":"btn btn-outline-primary"}`} onClick={pdfToggle}>{(showPDF)?"Close":"Signed Agreement"}</button>
         <br />

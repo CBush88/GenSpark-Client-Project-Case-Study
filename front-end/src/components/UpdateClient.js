@@ -6,13 +6,14 @@ import { clientValidation, emailAvailable } from '../services/Validation'
 
 const UpdateClient = (props) => {
 
-    const {helper, setHelper, clients, setClients} = props
+    const {helper, setHelper, clients, setClients, token} = props
 
     UpdateClient.propTypes = {
         helper: PropTypes.object,
         setHelper: PropTypes.func,
         clients: PropTypes.array,
         setClients: PropTypes.func,
+        token: PropTypes.object,
     }
 
 
@@ -72,10 +73,10 @@ const UpdateClient = (props) => {
                     <input className='w-75' type='text' name='clientEmail' id='clientEmail' pattern='^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$' title='Please enter a valid email address' value={updatedClient.clientEmail} onChange={handleChanges} ></input>
                 </div>
             </div>
-            <div className='text-start'>
+            {(token.role === "view")? "": <div className='text-start'>
                 <br />
                 <button className='btn btn-outline-success' type='submit'>Update</button>
-            </div>
+            </div>}
         </form>     
     </>
   )

@@ -63,11 +63,11 @@ const SignUp = (props) => {
                     "role": newUser.role
                 }
                 addUser(newUserHashed)
-                .then(res => console.log(res.data))
-                .then(() => {
+                .then(res => {
+                    console.log(res.data)
                     setUsers([
                         ...users,
-                        newUserHashed
+                        res.data
                     ])
                 })
                 .then(navigate("/"))

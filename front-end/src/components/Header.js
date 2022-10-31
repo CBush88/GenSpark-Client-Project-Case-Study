@@ -1,9 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 const Header = (props) => {
 
     const {token} = props
+    
+    Header.propTypes = {
+      token: PropTypes.object
+    }
 
   return (
     <div className='w-100'>

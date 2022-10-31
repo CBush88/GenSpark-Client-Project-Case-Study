@@ -8,9 +8,10 @@ const AddClient = (props) => {
 
     AddClient.propTypes = {
         clients: PropTypes.array,
+        token: PropTypes.object,
     }
 
-    const clients = props;  //Somehow not an array??
+    const {clients, token} = props;
 
     const initialState = {
         "clientName": "",
@@ -85,7 +86,7 @@ const AddClient = (props) => {
             </div>
             <br />
             <div className='text-start'>
-            <button type='submit' className='btn btn-sm btn-outline-success'>Submit</button>
+            {(token.role === "view")? "" : <button type='submit' className='btn btn-sm btn-outline-success'>Submit</button> }
             </div>
         </form>
     </div>
