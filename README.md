@@ -1,7 +1,7 @@
 # GenSpark-Client-Project-Case-Study
 This project is a full stack client-project management system.<br /> <br />
 Clients have projects assigned to them and agreements that have been signed.
-Basic authentication is included.
+Basic authentication is included on the client-side. Not ready for production.
 
 Each client can have many projects, each project can belong to only one client.
 
